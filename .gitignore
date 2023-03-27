@@ -1,0 +1,44 @@
+#demo_backend
+
+/demo_backend/.azle
+/demo_backend/.dfx
+/demo_backend/csharp
+/demo_backend/node_modules
+
+
+# unity
+*/[Ll]ibrary/
+*/.vs/
+*/[Tt]emp/
+*/[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+*/[Ll]ogs/
+*/[Mm]emoryCaptures/
+[Ss]erver/
+Windows/
+WebGL/
+Server/
+*.zip
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+
+
+
+# Mac OSX temporary files
+.DS_Store
+**/.DS_Store
+
+# dfx temporary files
+*/.dfx/
+
+# generated files
+*/src/declarations/
+
+# frontend code
+*/node_modules/
+*/dist/

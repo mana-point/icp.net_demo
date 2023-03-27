@@ -1,0 +1,20 @@
+type Error = record { msg : text };
+type Login = record { map : Map; player : Player };
+type LoginResult = record { ok : opt Login; error : opt Error };
+type Map = record { players : vec Player };
+type MovePlayer = record { map : Map; player : Player; time : nat64 };
+type MovePlayerResult = record { ok : opt MovePlayer; error : opt Error };
+type Player = record {
+  username : text;
+  owner : text;
+  position : Position;
+  lastTime : nat64;
+};
+type Position = record { x : int32; y : int32 };
+type UpdateMapResult = record { ok : opt Map; error : opt Error };
+type moveMsg = record { dir : int32 };
+service : () -> {
+  login : () -> (LoginResult);
+  movePlayer : (moveMsg) -> (MovePlayerResult);
+  updateWorld : () -> (UpdateMapResult) query;
+}

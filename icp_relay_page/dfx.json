@@ -1,0 +1,21 @@
+{
+  "canisters": {
+    "icp_relay_page_frontend": {
+      "frontend": {
+        "entrypoint": "src/icp_relay_page/src/index.html"
+      },
+      "source": [
+        "src/icp_relay_page/assets",
+        "dist/icp_relay_page/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "version": 1
+}

@@ -1,0 +1,13 @@
+{
+  "canisters": {
+    "demo": {
+      "type": "custom",
+      "build": "npx azle demo",
+      "root": "src",
+      "ts": "src/demo/demo.ts",
+      "candid": "src/demo/demo.did",
+      "wasm": ".azle/demo/demo.wasm.gz"
+    }
+  },
+  "dfx": "0.13.1"
+}

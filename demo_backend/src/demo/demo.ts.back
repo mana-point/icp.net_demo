@@ -1,0 +1,220 @@
+import { 
+    ic,
+    Opt,
+    Principal,
+    $init,
+    int32,
+    nat64,
+    $update,
+    Record
+} from 'azle';
+
+let owner: Opt<Principal> = null;
+
+export type Position = {
+    x: int32;
+    y: int32;
+}
+
+export type Player = {
+    owner: string;
+    username: string;
+    position: Position;
+    lastTime: nat64;
+};
+
+export type Map = {
+    players: Player []
+}
+
+export type Error = {
+    msg: string
+}
+
+export type State = {
+    players: {
+        [key: string]: Player;
+    };
+}
+
+// global state of players
+let state : State = {
+    players: {}
+};
+
+// init call
+$init;
+export function init() {
+    ic.print ("init");    
+    owner = ic.caller();
+}
+/*
+ic.set_timer_interval(1n, mainGameLoop);
+
+// main server loop
+function mainGameLoop ()
+{
+}
+
+// initial Login Call
+//export type Login = {
+//    player: Player
+//    map: Map
+//}
+*/
+export type LoginResult = Record<{
+    hello: string
+//    ok: Opt<Login>,
+//    error: Opt<Error>
+}>
+
+$update;
+export function login (): LoginResult 
+{
+    const caller = ic.caller().toString ();
+
+    // create player if he is new
+    if (state.players[caller] === undefined) {
+        state.players[caller] = {
+            owner: caller,
+            username: "",
+            position: {
+                x: 0,
+                y: 0
+            },
+            lastTime: 0n
+        };
+    }
+
+    // send a map of all players
+    // optimmize to send players in region
+    var login : Login = {
+        player: {
+            owner: state.players[caller].owner,
+            username: state.players[caller].username,
+            position: state.players[caller].position,
+            lastTime: state.players[caller].lastTime
+        },
+        map: {
+            players: Object.entries (state.players).map ((player) => {
+                return {
+                        owner: player[1].owner,
+                        username: player[1].username,
+                        position: player[1].position,
+                        lastTime: player[1].lastTime
+                    }
+                })
+            }
+        };
+
+    return {
+        hello: "there"
+//        ok: login,
+//        error: null
+    }
+}
+/*
+// update the world map
+export type UpdateMapResult = {
+    ok: Opt<Map>,
+    error: Opt<Error>
+}
+
+$query;
+export function updateWorld(): UpdateMapResult 
+{
+    // send a map of all players
+    // optimmize to send players in region
+    var map : Map = {
+        players: Object.entries (state.players).map ((player) => {
+            return {
+                    owner: player[1].owner,
+                    username: player[1].username,
+                    position: player[1].position,
+                    lastTime: player[1].lastTime
+                }
+            })
+        };
+
+    return {
+        ok: map,
+        error: null
+    }
+}
+
+// Move message for player
+export type moveMsg = {
+    dir: int8;
+}
+
+export type MovePlayer = {
+    player: Player,
+    map: Map
+}
+
+export type MovePlayerResult = {
+    ok: Opt<MovePlayer>,
+    error: Opt<Error>
+}
+
+$update;
+export function movePlayer (moveMsg : moveMsg): MovePlayerResult
+{
+    const caller = ic.caller().toString ();
+
+    // create player if he is new
+    if (state.players[caller] === undefined) {
+        return {
+            ok: null,
+            error: { msg: "No such player"}
+        };
+    }
+
+    let player = state.players[caller];
+
+    let time : nat64 = ic.time (); // nano seconds
+    time = time / 1000000n;
+
+    // check the players move time
+    if (player.lastTime + 5000n > time)
+    {
+        return {
+            ok: null,
+            error: {msg: "Player unable to move"}
+        };
+    }
+
+    if (moveMsg.dir == 0)
+       player.position.x++;
+    else if (moveMsg.dir = 1)
+       player.position.x--;
+    else if (moveMsg.dir = 2)
+       player.position.y++;
+    else if (moveMsg.dir = 3)
+       player.position.y--;
+
+    var moveResult : MovePlayer = {
+        player: {
+            owner: player.owner,
+            username: player.username,
+            position: player.position,
+            lastTime: player.lastTime
+        },
+        map: {
+            players: Object.entries (state.players).map ((player) => {
+                return {
+                        owner: player[1].owner,
+                        username: player[1].username,
+                        position: player[1].position,
+                        lastTime: player[1].lastTime
+                    }
+                })
+            }
+        };
+
+    return {
+        ok: moveResult,
+        error: null
+    }
+ }
+ */

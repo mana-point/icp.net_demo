@@ -1,0 +1,1918 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Fido2Net</name>
+    </assembly>
+    <members>
+        <member name="T:Fido2Net.CtapException">
+            <summary>
+            An exception representing a return status that is non-successful according to the CTAP specification
+            </summary>
+        </member>
+        <member name="P:Fido2Net.CtapException.Code">
+            <summary>
+            The status code that was returned
+            </summary>
+        </member>
+        <member name="M:Fido2Net.CtapException.#ctor(Fido2Net.CtapStatus)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="err">The status code to use</param>
+        </member>
+        <member name="T:Fido2Net.FidoException">
+            <summary>
+            An exception indicating that there was some problem with the FIDO2 device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoException.Code">
+            <summary>
+            The code returned from the device
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoException.#ctor(Fido2Net.FidoStatus)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="code">The code to use</param>
+        </member>
+        <member name="T:Fido2Net.CtapStatus">
+             <summary>
+             <para>Status codes as defined in Client to Authenticator Protocol (CTAP) standard</para>
+             
+             <para>Error response values in the range between <see cref="F:Fido2Net.CtapStatus.Ok"/> and <see cref="F:Fido2Net.CtapStatus.SpecLast"/> are reserved for spec purposes.</para>
+            
+             <para>Error response values in the range between <see cref="F:Fido2Net.CtapStatus.VendorFirst"/> and <see cref="F:Fido2Net.CtapStatus.VendorLast"/> may be used for vendor-specific implementations.
+             All other response values are reserved for future use and may not be used.
+             These vendor specific error codes are not interoperable and the platform should treat these errors as any other unknown error codes.</para>
+            
+             <para>Error response values in the range between <see cref="F:Fido2Net.CtapStatus.ExtensionFirst"/> and <see cref="F:Fido2Net.CtapStatus.ExtensionLast"/> may be used for extension-specific implementations. 
+             These errors need to be interoperable for vendors who decide to implement such optional extension.</para>
+             </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.Ok">
+            <summary>
+            Indicates successful response.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.InvalidCommand">
+            <summary>
+            The command is not a valid CTAP command.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.InvalidParameter">
+            <summary>
+            The command included an invalid parameter.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.InvalidLength">
+            <summary>
+            Invalid message or item length.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.InvalidSeq">
+            <summary>
+            Invalid message sequencing.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.Timeout">
+            <summary>
+            Message timed out.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.ChannelBusy">
+            <summary>
+            Channel busy.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.LockRequired">
+            <summary>
+            Command requires channel lock.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.InvalidChannel">
+            <summary>
+            Command not allowed on this cid.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.CborUnexpectedType">
+            <summary>
+            Invalid/unexpected CBOR error.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.InvalidCbor">
+            <summary>
+            Error when parsing CBOR.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.MissingParameter">
+            <summary>
+            Missing non-optional parameter.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.LimitExceeded">
+            <summary>
+            Limit for number of items exceeded.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.UnsupportedExtension">
+            <summary>
+            Unsupported extension.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.CredentialExcluded">
+            <summary>
+            Valid credential found in the exclude list.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.Processing">
+            <summary>
+            Processing (Lengthy operation is in progress).
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.InvalidCredential">
+            <summary>
+            Credential not valid for the authenticator.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.UserActionPending">
+            <summary>
+            Authentication is waiting for user interaction.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.OperationPending">
+            <summary>
+            Processing, lengthy operation is in progress.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.NoOperations">
+            <summary>
+            No request is pending.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.UnsupportedAlgorithm">
+            <summary>
+            Authenticator does not support requested algorithm.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.OperationDenied">
+            <summary>
+            Not authorized for requested operation.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.KeyStoreFull">
+            <summary>
+            Internal key storage is full.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.NoOperationPending">
+            <summary>
+            No outstanding operations.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.UnsupportedOption">
+            <summary>
+            Unsupported option.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.InvalidOption">
+            <summary>
+            Not a valid option for current operation.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.KeepAliveCancel">
+            <summary>
+            Pending keep alive was cancelled.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.NoCredentials">
+            <summary>
+            No valid credentials provided.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.UserActionTimeout">
+            <summary>
+            Timeout waiting for user interaction.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.NotAllowed">
+            <summary>
+            Continuation command, such as, authenticatorGetNextAssertion not allowed.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.PinInvalid">
+            <summary>
+            PIN Invalid.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.PinBlocked">
+            <summary>
+            PIN Blocked.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.PinAuthInvalid">
+            <summary>
+            PIN authentication,pinAuth, verification failed.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.PinAuthBlocked">
+            <summary>
+            PIN authentication,pinAuth, blocked. Requires power recycle to reset.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.PinNotSet">
+            <summary>
+            No PIN has been set.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.PinRequired">
+            <summary>
+            PIN is required for the selected operation.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.PolicyViolation">
+            <summary>
+            PIN policy violation. Currently only enforces minimum length.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.PinTokenExpired">
+            <summary>
+            pinToken expired on authenticator.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.RequestTooLarge">
+            <summary>
+            Authenticator cannot handle this request due to memory constraints.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.ActionTimeout">
+            <summary>
+            The current operation has timed out.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.UpRequired">
+            <summary>
+            User presence is required for the requested operation.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.Other">
+            <summary>
+            Other unspecified error.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.SpecLast">
+            <summary>
+            CTAP 2 spec last error.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.ExtensionFirst">
+            <summary>
+            Extension specific error.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.ExtensionLast">
+            <summary>
+            Extension specific error.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.VendorFirst">
+            <summary>
+            Vendor specific error.
+            </summary>
+        </member>
+        <member name="F:Fido2Net.CtapStatus.VendorLast">
+            <summary>
+            Vendor specific error.
+            </summary>
+        </member>
+        <member name="T:Fido2Net.FidoFlags">
+            <summary>
+            Flags representing global FIDO library behavior
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoFlags.None">
+            <summary>
+            No special behavior
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoFlags.Debug">
+            <summary>
+            Enable additional debug output from libfido2
+            </summary>
+        </member>
+        <member name="T:Fido2Net.Fido2Settings">
+            <summary>
+            The global settings for Fido2Net
+            </summary>
+        </member>
+        <member name="F:Fido2Net.Fido2Settings.Flags">
+            <summary>
+            Gets or sets the flags to use when initializing libfido2
+            behavior.  Must be set before use of any objects in the
+            Fido2Net namespace.
+            </summary>
+        </member>
+        <member name="T:Fido2Net.FidoAssertionStatement">
+            <summary>
+            A reference struct representing a statement contained within a <see cref="T:Fido2Net.FidoAssertion"/> object
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoAssertionStatement.AuthData">
+            <summary>
+            <para>WebAuthn §6.1 https://www.w3.org/TR/webauthn-1/#sec-authenticator-data</para>
+            Gets the authenticator data for the assertion statement.
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoAssertionStatement.Flags">
+            <summary>
+            Gets the flags that are set on this assertion statement
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoAssertionStatement.HmacSecret">
+            <summary>
+            <para>CTAP §9.1 (link TBD)</para>
+            Gets the HMAC secret for this assertion statement.
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoAssertionStatement.Id">
+            <summary>
+            Gets the ID for this assertion statement
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoAssertionStatement.Signature">
+            <summary>
+            Gets the signature for this assertion statement
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoAssertionStatement.UserDisplayName">
+            <summary>
+            Gets the user display name that is assigned to the credential this
+            assertion statement is based on
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoAssertionStatement.UserIcon">
+            <summary>
+            Gets the user icon that is assigned to the credential this assertion
+            statement is based on (probably a URL)
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoAssertionStatement.UserId">
+            <summary>
+            Gets the binary ID of the user that is assigned to the credential
+            this assertion statement is based on.
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoAssertionStatement.UserName">
+            <summary>
+            Gets the name of the user that is assigned to the credential this
+            assertion statement is based on
+            </summary>
+        </member>
+        <member name="T:Fido2Net.FidoAssertion">
+            <summary>
+            Creates an object for holding data about a given assertion.  In FIDO2, an assertion
+            is proof that the authenticator being used has knowledge of the private key associated
+            with the public key that the other party is in posession of.  
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoAssertion.Item(System.Int32)">
+            <summary>
+            Gets the assertion statement at the given index
+            </summary>
+            <param name="index">The index of the assertion statement to retrieve</param>
+            <returns>The assertion statement object</returns>
+            <exception cref="T:System.IndexOutOfRangeException">The index is not in the range [0, count)</exception>
+        </member>
+        <member name="P:Fido2Net.FidoAssertion.ClientDataHash">
+            <summary>
+            <para>WebAuthn §5.1 https://www.w3.org/TR/webauthn-1/#sec-client-data</para>
+            Gets or sets the hash of the client data object that the assertion is based on.
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the hash</exception>
+        </member>
+        <member name="P:Fido2Net.FidoAssertion.Count">
+            <summary>
+            Gets or sets the number of <see cref="T:Fido2Net.FidoAssertionStatement"/> entries contained
+            within this assertion.
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the count</exception>
+        </member>
+        <member name="P:Fido2Net.FidoAssertion.Rp">
+            <summary>
+            Gets or sets the relying party that requested this assertion
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the relying party</exception>
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+            <exception cref="T:System.OutOfMemoryException" />
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.op_Explicit(Fido2Net.FidoAssertion)~Fido2Net.Interop.fido_assert_t*">
+            <summary>
+            Cast operator for using this object as a native handle
+            </summary>
+            <param name="assert">The object to use</param>
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.AllowCredential(System.ReadOnlySpan{System.Byte})">
+            <summary>
+            Adds an allowed credential to this assertion.  If used, only credential objects
+            with the IDs added via this method will be considered when making an assertion.
+            </summary>
+            <param name="credentialId">The ID of the credential to add to the whitelist</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while adding the credential</exception>
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.SetAuthData(System.ReadOnlySpan{System.Byte},System.Int32)">
+            <summary>
+            Sets the authenticator data for a given statement in this assertion
+            </summary>
+            <param name="authData">The data to set</param>
+            <param name="index">The index of the assertion statement to set the data for</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the auth data</exception>
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.SetExtensions(Fido2Net.FidoExtensions)">
+            <summary>
+            Sets the extensions to use while creating this assertion
+            </summary>
+            <param name="extensions">The extension to use</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the extensions</exception>
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.SetHmacSalt(System.ReadOnlySpan{System.Byte},System.Int32)">
+            <summary>
+            Sets the HMAC salt on a given assertion statement within this assertion
+            </summary>
+            <param name="salt">The salt to set</param>
+            <param name="index">The index of the assertion statement that will receive the salt</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the salt</exception>
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.SetOptions(System.Boolean,System.Boolean)">
+            <summary>
+            Sets the options that will be used when the assertion is generated
+            </summary>
+            <param name="userPresent">Whether or not the user is required to be present (i.e. interact with the authenticator)</param>
+            <param name="userVerification">Whether or not a user verification process must be used in addition to the assertion generation</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the options</exception>
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.SetSignature(System.ReadOnlySpan{System.Byte},System.Int32)">
+            <summary>
+            Sets the signature for the assertion statement at the given index
+            </summary>
+            <param name="signature">The signature bytes to set</param>
+            <param name="index">The index of the assertion statement to set the signature on</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the signature</exception>
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.Verify(System.Int32,Fido2Net.FidoCose,System.ReadOnlySpan{System.Byte})">
+            <summary>
+            Verifies that the signature of the assertion statement at the given index matches
+            the parameters of the assertion
+            </summary>
+            <param name="index">The index of the assertion statement to check</param>
+            <param name="algorithm">The algorithm used in the public key provided</param>
+            <param name="pk">The public key to use for verification</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs or verifications fails</exception>
+        </member>
+        <member name="M:Fido2Net.FidoAssertion.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:Fido2Net.FidoAuthFlags">
+            <summary>
+            Flags set on either a <see cref="T:Fido2Net.FidoCredential"/> or a <see cref="T:Fido2Net.FidoAssertionStatement"/>
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoAuthFlags.UserPresent">
+            <summary>
+            The user was present for the credential/assertion generation process
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoAuthFlags.UserVerified">
+            <summary>
+            The user has been verified via verification process
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoAuthFlags.AttestedCredential">
+            <summary>
+            An attested credential object is included with this object
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoAuthFlags.ExtensionData">
+            <summary>
+            Extension data is included on this object
+            </summary>
+        </member>
+        <member name="T:Fido2Net.FidoCapabilities">
+            <summary>
+            Flags representing the capabilities of a FIDO2 authenticator
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoCapabilities.Wink">
+            <summary>
+            The authenticator has some sort of action that indicates usage 
+            (e.g. blinking LED, audio notification, etc)
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoCapabilities.Cbor">
+            <summary>
+            The device has the ability to communicate via the CBOR protocol (RFC 7049)
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoCapabilities.Nmsg">
+            <summary>
+            The device does NOT have the ability to communicate via the CTAP1 / U2F
+            protocol 
+            </summary>
+        </member>
+        <member name="T:Fido2Net.FidoCborInfo">
+            <summary>
+            A class that represents the extended details of a FIDO2 authenticator
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCborInfo.AaGuid">
+            <summary>
+            Gets the Authenticator attestation GUID of this device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCborInfo.Extensions">
+            <summary>
+            Gets the extensions that this device supports
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCborInfo.MaxMessageSize">
+            <summary>
+            Gets the maximum message size for this device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCborInfo.Options">
+            <summary>
+            Gets the options that this device supports
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCborInfo.PinProtocols">
+            <summary>
+            Gets the pin protocols that this device supports
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCborInfo.Versions">
+            <summary>
+            Gets the versions that this device supports
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoCborInfo.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoCborInfo.op_Explicit(Fido2Net.FidoCborInfo)~Fido2Net.Interop.fido_cbor_info_t*">
+            <summary>
+            A cast operator for using a CborInfo object as a native handle
+            </summary>
+            <param name="info">The object to use</param>
+        </member>
+        <member name="M:Fido2Net.FidoCborInfo.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Fido2Net.FidoCborInfo.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Fido2Net.FidoCose">
+            <summary>
+            CBOR Object Signing and Encryption algorithms (RFC 8152)
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoCose.ES256">
+            <summary>
+            ECDSA w/ SHA-256
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoCose.RS256">
+            <summary>
+            RSA Signature with SHA-256
+            </summary>
+        </member>
+        <member name="T:Fido2Net.FidoCredentialRp">
+            <summary>
+            A PODO representing a relying party for a <see cref="T:Fido2Net.FidoCredential"/>
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCredentialRp.Name">
+            <summary>
+            Gets or sets the name of the relying party
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCredentialRp.Id">
+            <summary>
+            Gets or sets the ID of the relying party
+            </summary>
+        </member>
+        <member name="T:Fido2Net.FidoCredentialUser">
+            <summary>
+            A PODO representing a user attached to a <see cref="T:Fido2Net.FidoCredential"/>
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCredentialUser.Id">
+            <summary>
+            Gets or sets the ID of the user
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCredentialUser.Name">
+            <summary>
+            Gets or set the name of the user
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCredentialUser.DisplayName">
+            <summary>
+            Gets or sets the display name for the user
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCredentialUser.Icon">
+            <summary>
+            Gets or sets an identifier for the icon for the user
+            </summary>
+        </member>
+        <member name="T:Fido2Net.FidoCredential">
+            <summary>
+            A class that holds a FIDO credential object which can be used 
+            to generate a <see cref="T:Fido2Net.FidoAssertion"/>
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCredential.AuthData">
+            <summary>
+            Gets or sets the authenticator data for this credential
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the auth data</exception>
+        </member>
+        <member name="P:Fido2Net.FidoCredential.ClientDataHash">
+            <summary>
+            <para>WebAuthn §5.1 https://www.w3.org/TR/webauthn-1/#sec-client-data</para>
+            Gets or sets the hash of the client data object that the assertion is based on.
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the hash</exception>
+        </member>
+        <member name="P:Fido2Net.FidoCredential.Flags">
+            <summary>
+            Gets the flags that are set on this credential
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCredential.Format">
+            <summary>
+            <para>WebAuthn §6.4.2 https://www.w3.org/TR/webauthn-1/#attestation-formats </para>
+            Gets or sets the format of the attestation object that was generated for this credential
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the format</exception>
+        </member>
+        <member name="P:Fido2Net.FidoCredential.Id">
+            <summary>
+            Gets the ID that was generated for this credential
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCredential.PublicKey">
+            <summary>
+            Gets the public key that was generated for this credential
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoCredential.Rp">
+            <summary>
+            Gets or sets the relying party which requested the creation of this credentials
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the rp</exception>
+        </member>
+        <member name="P:Fido2Net.FidoCredential.Signature">
+            <summary>
+            Gets or sets the signature for this credential
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the signature</exception>
+        </member>
+        <member name="P:Fido2Net.FidoCredential.X5C">
+            <summary>
+            Gets the attestation certificate for this credential
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoCredential.#ctor">
+            <summary>
+            Default Constructor
+            </summary>
+            <exception cref="T:System.OutOfMemoryException" />
+        </member>
+        <member name="M:Fido2Net.FidoCredential.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoCredential.op_Explicit(Fido2Net.FidoCredential)~Fido2Net.Interop.fido_cred_t*">
+            <summary>
+            A cast operator for using this object as a native handle
+            </summary>
+            <param name="cred">The object to use as a native handle</param>
+        </member>
+        <member name="M:Fido2Net.FidoCredential.Exclude(System.ReadOnlySpan{System.Byte})">
+            <summary>
+            Excludes a given credential from being created (useful for finding out if
+            a credential already exists on the device)
+            </summary>
+            <param name="id">The ID of the credential to exclude</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while excluding the credential</exception>
+        </member>
+        <member name="M:Fido2Net.FidoCredential.SetExtensions(Fido2Net.FidoExtensions)">
+            <summary>
+            Sets the extensions to use when generating the credential
+            </summary>
+            <param name="extensions">The extensions to use</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the extension</exception>
+        </member>
+        <member name="M:Fido2Net.FidoCredential.SetOptions(System.Boolean,System.Boolean)">
+            <summary>
+            Sets the options to use when generating the credential
+            </summary>
+            <param name="residentKey">Requests that key material be stored on the device</param>
+            <param name="verifyUser">Requests that the credential go through the user verification process after being generated</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the options</exception>
+        </member>
+        <member name="M:Fido2Net.FidoCredential.SetType(Fido2Net.FidoCose)">
+            <summary>
+            Sets the algorithm to use when signing using this credential
+            </summary>
+            <param name="type">The signing / encryption algorithm to use</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the type</exception>
+        </member>
+        <member name="M:Fido2Net.FidoCredential.SetUser(Fido2Net.FidoCredentialUser)">
+            <summary>
+            Sets the user that is associated with this credential
+            </summary>
+            <param name="user">The user to associate with this credential</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the user</exception>
+        </member>
+        <member name="M:Fido2Net.FidoCredential.SetX509(System.ReadOnlySpan{System.Byte})">
+            <summary>
+            Sets the X509 certificate to use for attestation purposes
+            </summary>
+            <param name="x509">The X509 certificate</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the certificate</exception>
+        </member>
+        <member name="M:Fido2Net.FidoCredential.Verify">
+            <summary>
+            Verifies that the signature of this credential matches its attributes
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs or verification fails</exception>
+        </member>
+        <member name="M:Fido2Net.FidoCredential.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="T:Fido2Net.FidoDevice">
+            <summary>
+            A class representing a FIDO2 capable device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoDevice.Flags">
+            <summary>
+            Gets the capabilities of this device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoDevice.IsFido2">
+            <summary>
+            Gets whether or not this device supports FIDO2
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoDevice.Protocol">
+            <summary>
+            Gets the protocol version that this device supports
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoDevice.RetryCount">
+            <summary>
+            Gets the retry count remaining for this device.  If the retry coutn
+            is exhausted the device will need to be factory reset before continuing.
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while retrieving the retry count</exception>
+        </member>
+        <member name="P:Fido2Net.FidoDevice.Version">
+            <summary>
+            Gets the version of this device
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.#ctor">
+            <summary>
+            Default constructor
+            </summary>
+            <exception cref="T:System.OutOfMemoryException" />
+        </member>
+        <member name="M:Fido2Net.FidoDevice.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.op_Explicit(Fido2Net.FidoDevice)~Fido2Net.Interop.fido_dev_t*">
+            <summary>
+            A cast operator to use this object as a native handle
+            </summary>
+            <param name="dev">The object to use as a native handle</param>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.Close">
+            <summary>
+            Closes the device, preventing further use
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while closing</exception>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.ForceFido2">
+            <summary>
+            Forces the use of the FIDO2 standard when generating credentials and assertions
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.ForceU2F">
+            <summary>
+            Forces the use of the U2F standard when generating credentials and assertions
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.GetAssert(Fido2Net.FidoAssertion,System.String)">
+            <summary>
+            Uses the device to generate an assertion
+            </summary>
+            <param name="assert">The assertion object with its input properties properly set</param>
+            <param name="pin">The pin set on the device, if applicable</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while generating the assertion</exception>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.GetCborInfo">
+            <summary>
+            Gets the extended information about this device
+            </summary>
+            <returns>The extended information about this device</returns>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while retrieving the information</exception>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.MakeCredential(Fido2Net.FidoCredential,System.String)">
+            <summary>
+            Uses the device to generate a credential object
+            </summary>
+            <param name="credential">The credential object with its input properties set</param>
+            <param name="pin">The pin of the device, if applicable</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while generating the credential</exception>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.Open(System.String)">
+            <summary>
+            Opens the device at the given path (to find the path of a device, use
+            <see cref="T:Fido2Net.FidoDeviceInfoList"/>
+            </summary>
+            <param name="path">The path of the device</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while opening the device</exception>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.Reset">
+            <summary>
+            Performs a factory reset on the device
+            </summary>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while resetting</exception>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.SetPin(System.String,System.String)">
+            <summary>
+            Sets the pin on a device
+            </summary>
+            <param name="oldPin">The old pin</param>
+            <param name="pin">The new pin</param>
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while setting the pin</exception>
+        </member>
+        <member name="M:Fido2Net.FidoDevice.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Fido2Net.FidoDevice.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Fido2Net.FidoDeviceInfo">
+            <summary>
+            A class representing external info about a particular FIDO capable
+            device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoDeviceInfo.Manufacturer">
+            <summary>
+            Gets the manufacturer of the device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoDeviceInfo.Path">
+            <summary>
+            Gets the path of the device (for use in <see cref="M:Fido2Net.FidoDevice.Open(System.String)"/>)
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoDeviceInfo.Product">
+            <summary>
+            Gets the product ID of the device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoDeviceInfo.ProductString">
+            <summary>
+            Gets a string representation of the product ID
+            </summary>
+        </member>
+        <member name="P:Fido2Net.FidoDeviceInfo.Vendor">
+            <summary>
+            Gets the vendor ID of the device
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoDeviceInfo.ToString">
+            <inheritdoc />
+        </member>
+        <member name="T:Fido2Net.FidoDeviceInfoList">
+            <summary>
+            A class that can enumerate FIDO capable devices that are attached to and/or paired
+            with the local machine
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoDeviceInfoList.#ctor(System.Int32)">
+            <summary>
+            Default constructor
+            </summary>
+            <param name="capacity">The maximum number of devices to search for</param>
+            <exception cref="T:System.OutOfMemoryException" />
+            <exception cref="T:Fido2Net.CtapException">Thrown if an error occurs while enumerating the devices</exception>
+        </member>
+        <member name="M:Fido2Net.FidoDeviceInfoList.Finalize">
+            <summary>
+            Finalizer
+            </summary>
+        </member>
+        <member name="M:Fido2Net.FidoDeviceInfoList.Dispose">
+            <inheritdoc />
+        </member>
+        <member name="M:Fido2Net.FidoDeviceInfoList.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="M:Fido2Net.FidoDeviceInfoList.GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="T:Fido2Net.FidoExtensions">
+            <summary>
+            Extensions for a FIDO2 device
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoExtensions.None">
+            <summary>
+            No extensions
+            </summary>
+        </member>
+        <member name="F:Fido2Net.FidoExtensions.HmacSecret">
+            <summary>
+            HMAC Secret extension (CTAP §9.1)  
+            </summary>
+        </member>
+        <member name="T:Fido2Net.Interop.fido_dev_io_open_t">
+            <summary>
+            The signature for a callback for opening a FIDO2 device
+            </summary>
+            <param name="id">The ID of the device to open</param>
+        </member>
+        <member name="T:Fido2Net.Interop.fido_dev_io_close_t">
+            <summary>
+            The signature for a callback for closing a FIDO2 device
+            </summary>
+            <param name="device">The device to close</param>
+        </member>
+        <member name="T:Fido2Net.Interop.fido_dev_io_read_t">
+            <summary>
+            The signature of a callback for reading from a FIDO2 device
+            </summary>
+            <param name="device">The device to read from</param>
+            <param name="buffer">The buffer to read into</param>
+            <param name="size">The size of the passed buffer</param>
+            <param name="wait">The number of millisecond to wait before giving up (-1 for infinite)</param>
+            <returns>The number of bytes read, or -1 on error</returns>
+        </member>
+        <member name="T:Fido2Net.Interop.fido_dev_io_write_t">
+            <summary>
+            The signature of a callback for writing to a FIDO2 device
+            </summary>
+            <param name="device">The device to write to</param>
+            <param name="buffer">The buffer to write</param>
+            <param name="size">The size of the buffer to write</param>
+            <returns>The number of bytes written, or -1 on error</returns>
+        </member>
+        <member name="T:Fido2Net.Interop.fido_assert_t">
+            <summary>
+            FIDO assertion handle
+            </summary>
+        </member>
+        <member name="T:Fido2Net.Interop.fido_cred_t">
+            <summary>
+            FIDO credential handle
+            </summary>
+        </member>
+        <member name="T:Fido2Net.Interop.fido_dev_t">
+            <summary>
+            FIDO device handle
+            </summary>
+        </member>
+        <member name="T:Fido2Net.Interop.fido_dev_info_t">
+            <summary>
+            FIDO device info handle
+            </summary>
+        </member>
+        <member name="T:Fido2Net.Interop.fido_cbor_info_t">
+            <summary>
+            FIDO extended device info handle
+            </summary>
+        </member>
+        <member name="F:Fido2Net.Interop.fido_opt_t.FIDO_OPT_OMIT">
+            <summary>
+            Use authenticator's default
+            </summary>
+        </member>
+        <member name="F:Fido2Net.Interop.fido_opt_t.FIDO_OPT_FALSE">
+            <summary>
+            Explicitly set option to false
+            </summary>
+        </member>
+        <member name="F:Fido2Net.Interop.fido_opt_t.FIDO_OPT_TRUE">
+            <summary>
+            Explicitly set option to true
+            </summary>
+        </member>
+        <member name="T:Fido2Net.Interop.fido_dev_io_t">
+            <summary>
+            The I/O handlers used to talk to a device. Its usage is optional. By default, 
+            libfido2 will use libhidapi to talk to a FIDO device.
+            </summary>
+        </member>
+        <member name="P:Fido2Net.Interop.fido_dev_io_t.open">
+            <summary>
+            The callback for opening a device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.Interop.fido_dev_io_t.close">
+            <summary>
+            The callback for closing a device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.Interop.fido_dev_io_t.read">
+            <summary>
+            The callback for reading from a device
+            </summary>
+        </member>
+        <member name="P:Fido2Net.Interop.fido_dev_io_t.write">
+            <summary>
+            The callback for writing to a device
+            </summary>
+        </member>
+        <member name="T:Fido2Net.Interop.Native">
+            <summary>
+            P/Invoke methods
+            </summary>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_new">
+            <summary>
+            Returns a pointer to a newly allocated, empty fido_assert_t type. 
+            If memory cannot be allocated, <c>null</c> is returned
+            </summary>
+            <returns>A newly allocated, empty fido_assert_t type</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_new">
+            <summary>
+            Returns a pointer to a newly allocated, empty fido_cred_t type. 
+            If memory cannot be allocated, <c>null</c> is returned.
+            </summary>
+            <returns>A newly allocated, empty fido_cred_t type</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_new">
+            <summary>
+            Returns a pointer to a newly allocated, empty fido_dev_t type. 
+            If memory cannot be allocated, <c>null</c> is returned.
+            </summary>
+            <returns>A newly allocated, empty fido_dev_t type</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_info_new(System.UIntPtr)">
+            <summary>
+            Returns a pointer to a newly allocated, empty fido_dev_info_t type. 
+            If memory cannot be allocated, <c>null</c> is returned.
+            </summary>
+            <returns>A newly allocated, empty fido_dev_info_t type</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_new">
+            <summary>
+            Returns a pointer to a newly allocated, empty fido_cbor_info_t type. 
+            If memory cannot be allocated, <c>null</c> is returned.
+            </summary>
+            <returns>A newly allocated, empty fido_cbor_info_t type</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_free(Fido2Net.Interop.fido_assert_t**)">
+            <summary>
+            Releases the memory backing *assert_p, where *assert_p must have been previously allocated by <see cref="M:Fido2Net.Interop.Native.fido_assert_new"/>. 
+            On return, *assert_p is set to <c>null</c>. Either assert_p or *assert_p may be <c>null</c>, in which case fido_assert_free() is a NOP.
+            </summary>
+            <param name="assert_p">The object to free</param>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_free(Fido2Net.Interop.fido_cbor_info_t**)">
+            <summary>
+            Releases the memory backing *ci_p, where *ci_p must have been previously allocated by <see cref="M:Fido2Net.Interop.Native.fido_cbor_info_new"/>. 
+            On return, *ci_p is set to <c>null</c>. Either ci_p or *ci_p may be <c>null</c>, in which case fido_cbor_info_free() is a NOP.
+            </summary>
+            <param name="ci_p">The object to free</param>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_free(Fido2Net.Interop.fido_cred_t**)">
+            <summary>
+            Releases the memory backing *cred_p, where *cred_p must have been previously allocated by <see cref="M:Fido2Net.Interop.Native.fido_cred_new"/>. 
+            On return, *cred_p is set to <c>null</c>. Either cred_p or *cred_p may be <c>null</c>, in which case fido_cred_free() is a NOP.
+            </summary>
+            <param name="cred_p">The object to free</param>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_force_fido2(Fido2Net.Interop.fido_dev_t*)">
+            <summary>
+            Forces the given device to use FIDO2 mode
+            </summary>
+            <param name="dev">The device to act on</param>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_force_u2f(Fido2Net.Interop.fido_dev_t*)">
+            <summary>
+            Forces the given device to use U2F mode
+            </summary>
+            <param name="dev">The device to act on</param>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_free(Fido2Net.Interop.fido_dev_t**)">
+            <summary>
+            Releases the memory backing *dev_p, where *dev_p must have been previously allocated by <see cref="M:Fido2Net.Interop.Native.fido_dev_new"/>. 
+            On return, *dev_p is set to <c>null</c>. Either dev_p or *dev_p may be <c>null</c>, in which case fido_dev_free() is a NOP.
+            </summary>
+            <param name="dev_p"></param>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_info_free(Fido2Net.Interop.fido_dev_info_t**,System.UIntPtr)">
+            <summary>
+            Releases the memory backing *devlist_p, where *devlist_p must have been previously allocated by <see cref="M:Fido2Net.Interop.Native.fido_dev_info_new(System.UIntPtr)"/>. 
+            On return, *devlist_p is set to <c>null</c>. Either devlist_p or *devlist_p may be <c>null</c>, in which case fido_dev_info_free() is a NOP.
+            </summary>
+            <param name="devlist_p"></param>
+            <param name="n">The number of entries this object was allocated to hold</param>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_init(System.Int32)">
+            <summary>
+            The fido_init() function initialises the libfido2 library. 
+            Its invocation must precede that of any other libfido2 function. 
+            If FIDO_DEBUG is set in flags, then debug output will be emitted by libfido2 on stderr. 
+            Alternatively, the FIDO_DEBUG environment variable may be set. 
+            Please note that debug output is conditional on _FIDO_DEBUG being defined when the library was compiled.
+            </summary>
+            <param name="flags">The flags to use during initialization</param>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_authdata_ptr(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns a pointer to the authenticator data of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>A pointer to the authenticator data of statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_clientdata_hash_ptr(Fido2Net.Interop.fido_assert_t*)">
+            <summary>
+            Returns a pointer to the client data hash of assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <returns>A pointer to the client data hash of assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_hmac_secret_ptr(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns a pointer to the hmac-secret of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>A pointer to hmac-secret of statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_id_ptr(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns a pointer to the ID of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>A pointer to the ID of statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_sig_ptr(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns a pointer to the signature of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>A pointer to the signatureof statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_user_id_ptr(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns a pointer to the user ID of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>A pointer to the user ID of statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_extensions_ptr(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns a pointer to the extensions of ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>A pointer to the extensions of ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_options_name_ptr(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns a pointer to the options dictionary names in ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>A pointer to the options dictionary names of ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_versions_ptr(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns a pointer to the versions of ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>A pointer to the versions of ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_options_value_ptr(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns a pointer to the options dictionary values of ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>A pointer to the options dictionary values of ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_rp_id(Fido2Net.Interop.fido_assert_t*)">
+            <summary>
+            Returns a pointer to the relying party of assert
+            </summary>
+            <param name="assert">The object to act on</param>
+            <returns>A pointer to the relying party of assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_user_display_name(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns a pointer to the relying party of statement idx in assert
+            </summary>
+            <param name="assert">The object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>A pointer to the relying party of assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_user_icon(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns a pointer to the user icon of statement idx in assert
+            </summary>
+            <param name="assert">The object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>A pointer to the user icon of assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_user_name(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns a pointer to the user name of statement idx in assert
+            </summary>
+            <param name="assert">The object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>A pointer to the user name of assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_fmt(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns a pointer to the format of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>A pointer to the format of cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_rp_id(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns a pointer to the relying party ID of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>A pointer to the relying party ID of cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_rp_name(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns a pointer to the relying party name of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>A pointer to the relying part name of cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_info_manufacturer_string(Fido2Net.Interop.fido_dev_info_t*)">
+            <summary>
+            Returns a pointer to the manufacturer string of di
+            </summary>
+            <param name="di">The object to act on</param>
+            <returns>A pointer to the manufacturer string of di</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_info_path(Fido2Net.Interop.fido_dev_info_t*)">
+            <summary>
+            Returns a pointer to the path of di
+            </summary>
+            <param name="di">The object to act on</param>
+            <returns>A pointer to the path of di</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_info_product_string(Fido2Net.Interop.fido_dev_info_t*)">
+            <summary>
+            Returns a pointer to the product string of di
+            </summary>
+            <param name="di">The object to act on</param>
+            <returns>A pointer to the product string of di</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_info_ptr(Fido2Net.Interop.fido_dev_info_t*,System.UIntPtr)">
+            <summary>
+            Returns a pointer to the idx entry of di
+            </summary>
+            <param name="di">The object to act on</param>
+            <param name="idx">The index of the object to retrieve</param>
+            <returns>A pointer to the idx entry of di</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_protocols_ptr(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns a pointer to the protocols of ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>A pointer to the protocols of ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_aaguid_ptr(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns a pointer to the AAGUID of ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>A pointer to the AAGUID of ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_authdata_ptr(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns a pointer to the authenticator data of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>A pointer to the authenticator data of cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_clientdata_hash_ptr(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns a pointer to the client data hash of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>A pointer to the client data hash of cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_id_ptr(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns a pointer to the ID of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>A pointer to the ID of cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_pubkey_ptr(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns a pointer to the public key of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>A pointer to the public key of cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_sig_ptr(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns a pointer to the signature of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>A pointer to the signature of cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_x5c_ptr(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns a pointer to the attestation certificate of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>A pointer to the attestation of cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_allow_cred(Fido2Net.Interop.fido_assert_t*,System.Byte*,System.UIntPtr)">
+            <summary>
+            Adds ptr to the list of credentials allowed in assert, where ptr points to a credential ID of len bytes. 
+            A copy of ptr is made, and no references to the passed pointer are kept. 
+            If this call fails, the existing list of allowed credentials is preserved.
+            </summary>
+            <param name="assert">The object to act on</param>
+            <param name="ptr">A pointer to the ID of the credential to allow</param>
+            <param name="len">The length of the data inside of <paramref name="ptr"/></param>
+            <returns></returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_set_authdata(Fido2Net.Interop.fido_assert_t*,System.UIntPtr,System.Byte*,System.UIntPtr)">
+            <summary>
+            Set the authenticator data of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to set</param>
+            <param name="ptr">The authenticator data to set</param>
+            <param name="len">The length of the data in <paramref name="ptr"/></param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_set_clientdata_hash(Fido2Net.Interop.fido_assert_t*,System.Byte*,System.UIntPtr)">
+            <summary>
+            Set the client data hash of assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="ptr">The client data hash to set</param>
+            <param name="len">The length of the data in <paramref name="ptr"/></param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_set_count(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Sets the number of assertion statements contained in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="n">The new number of assertion statements</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_set_extensions(Fido2Net.Interop.fido_assert_t*,Fido2Net.FidoExtensions)">
+            <summary>
+            Sets the extensions of assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="ext">The extensions to set</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_set_hmac_salt(Fido2Net.Interop.fido_assert_t*,System.Byte*,System.UIntPtr)">
+            <summary>
+            Sets the hmac salt of assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="salt">A pointer to the hmac salt to set</param>
+            <param name="salt_len">The length of the data in <paramref name="salt"/></param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_set_options(Fido2Net.Interop.fido_assert_t*,System.Boolean,System.Boolean)">
+            <summary>
+            Sets the options of assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="up">Whether or not to require user presence for the generation process</param>
+            <param name="uv">Whether or not to require user verification for the generation process</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_set_rp(Fido2Net.Interop.fido_assert_t*,System.String)">
+            <summary>
+            Sets the relying party of assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="id">The ID of the the relying party</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_set_sig(Fido2Net.Interop.fido_assert_t*,System.UIntPtr,System.Byte*,System.UIntPtr)">
+            <summary>
+            Set the client data hash of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to set</param>
+            <param name="ptr">The signature to set</param>
+            <param name="len">The length of the data in <paramref name="ptr"/></param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_verify(Fido2Net.Interop.fido_assert_t*,System.UIntPtr,Fido2Net.FidoCose,System.Void*)">
+            <summary>
+            Verifies whether the client data hash, relying party ID, user presence and user verification attributes 
+            of assert have been attested by the holder of the private counterpart of the public key pk of COSE type cose_alg, 
+            where cose_alg is either <see cref="F:Fido2Net.FidoCose.ES256"/> or <see cref="F:Fido2Net.FidoCose.RS256"/> and pk points to a 
+            es256_pk_t or rs256_pk_t type accordingly.
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to set</param>
+            <param name="cose_alg">The algorithm to use during verification</param>
+            <param name="pk">The public key to use during verification</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_exclude(Fido2Net.Interop.fido_cred_t*,System.Byte*,System.UIntPtr)">
+            <summary>
+            Adds ptr to the list of credentials excluded by cred, where ptr points to a credential ID of len bytes. 
+            A copy of ptr is made, and no references to the passed pointer are kept. 
+            If this function fails, the existing list of excluded credentials is preserved.
+            </summary>
+            <param name="cred">The credential object to act on</param>
+            <param name="id_ptr">A pointer to the id of the credential to exclude</param>
+            <param name="id_len">The length of the data in <paramref name="id_ptr"/></param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_set_authdata(Fido2Net.Interop.fido_cred_t*,System.Byte*,System.UIntPtr)">
+            <summary>
+            Sets the authenticator data of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <param name="ptr">A pointer to the authenticator data</param>
+            <param name="len">The length of the data in <paramref name="ptr"/></param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_set_clientdata_hash(Fido2Net.Interop.fido_cred_t*,System.Byte*,System.UIntPtr)">
+            <summary>
+            Sets the client data hash of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <param name="hash">A pointer to the client data hash</param>
+            <param name="hash_len">The length of the data in <paramref name="hash"/></param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_set_extensions(Fido2Net.Interop.fido_cred_t*,Fido2Net.FidoExtensions)">
+            <summary>
+            Sets the extensions of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <param name="ext">The extensions to set</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_set_fmt(Fido2Net.Interop.fido_cred_t*,System.String)">
+            <summary>
+            Sets the format of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <param name="fmt">The format to set</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_set_options(Fido2Net.Interop.fido_cred_t*,System.Boolean,System.Boolean)">
+            <summary>
+            Sets the options of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <param name="rk">Whether or not to attempt to store key material onto the device</param>
+            <param name="uv">Whether or not to request user verification during the generation process</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_set_rp(Fido2Net.Interop.fido_cred_t*,System.String,System.String)">
+            <summary>
+            Sets the relying party name of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <param name="id">The relying party ID to set</param>
+            <param name="name">The relying party name to set</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_set_sig(Fido2Net.Interop.fido_cred_t*,System.Byte*,System.UIntPtr)">
+            <summary>
+            Sets the signature of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <param name="ptr">A pointer to the signature to set</param>
+            <param name="len">The length of the data in <paramref name="ptr"/></param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_set_type(Fido2Net.Interop.fido_cred_t*,Fido2Net.FidoCose)">
+            <summary>
+            Sets the algorithm type of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <param name="cose_alg">The algorithm type to set</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_set_user(Fido2Net.Interop.fido_cred_t*,System.Byte*,System.UIntPtr,System.String,System.String,System.String)">
+            <summary>
+            Sets the user data of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <param name="user_id">A pointer to the user ID data</param>
+            <param name="user_id_len">The length of the data in <paramref name="user_id"/></param>
+            <param name="name">The user name</param>
+            <param name="display_name">The user display name</param>
+            <param name="icon">The user icon identifier (e.g. url)</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_set_x509(Fido2Net.Interop.fido_cred_t*,System.Byte*,System.UIntPtr)">
+            <summary>
+            Sets the attestation certificate of cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <param name="ptr">A pointer to the attestation certificate to set</param>
+            <param name="len">The length of the data in <paramref name="ptr"/></param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_verify(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Verifies whether the client data hash, relying party ID, credential ID, type, and resident key and user verification attributes 
+            of cred have been attested by the holder of the private counterpart of the public key contained in the credential's 
+            x509 certificate.
+            </summary>
+            <param name="cred">The credential to act on</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_close(Fido2Net.Interop.fido_dev_t*)">
+            <summary>
+            Closes the device represented by dev. If dev is already closed, this is a NOP.
+            </summary>
+            <param name="dev">The device to close</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_get_assert(Fido2Net.Interop.fido_dev_t*,Fido2Net.Interop.fido_assert_t*,System.String)">
+            <summary>
+            <para>Asks the FIDO device represented by dev for an assertion according to the following parameters defined in assert:
+            relying party ID;</para>
+            client data hash;
+            list of allowed credential IDs;
+            user presence and user verification attributes.
+            <para>See fido_assert_set(3) for information on how these values are set.</para>
+            <para>If a PIN is not needed to authenticate the request against dev, then pin may be NULL.  Otherwise pin must point to a NUL-terminated UTF-8 string.</para>
+            <para>After a successful call, the <see cref="M:Fido2Net.Interop.Native.fido_assert_count(Fido2Net.Interop.fido_assert_t*)"/>, <see cref="M:Fido2Net.Interop.Native.fido_assert_user_display_name(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)"/>, 
+            <see cref="M:Fido2Net.Interop.Native.fido_assert_user_icon(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)"/>, <see cref="M:Fido2Net.Interop.Native.fido_assert_user_name(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)"/>, 
+            <see cref="M:Fido2Net.Interop.Native.fido_assert_authdata_ptr(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)"/>, <see cref="M:Fido2Net.Interop.Native.fido_assert_user_id_ptr(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)"/>, and <see cref="M:Fido2Net.Interop.Native.fido_assert_sig_ptr(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)"/> 
+            functions may be invoked on assert to retrieve the various attributes of the generated assertion.</para>
+            <para>Please note that fido_dev_get_assert() is synchronous and will block if necessary.</para>
+            </summary>
+            <param name="dev">The device to use for generation</param>
+            <param name="assert">The assert to use for generation</param>
+            <param name="pin">The pin of the device</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_get_cbor_info(Fido2Net.Interop.fido_dev_t*,Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Gets the extended information of the device
+            </summary>
+            <param name="dev">The device to get the info from</param>
+            <param name="ci">A pointer to the result.  It will be populated on success</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_get_retry_count(Fido2Net.Interop.fido_dev_t*,System.Int32*)">
+            <summary>
+            Fills retries with the number of PIN retries left in dev before lock-out, where retries is an addressable pointer.
+            </summary>
+            <param name="dev">The device to act on</param>
+            <param name="retries">A pointer to the location to store the result</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_info_manifest(Fido2Net.Interop.fido_dev_info_t*,System.UIntPtr,System.UIntPtr*)">
+            <summary>
+            Fills devlist with up to ilen FIDO devices found by the underlying operating system. 
+            Currently only USB HID devices are supported. 
+            The number of discovered devices is returned in olen, where olen is an addressable pointer.
+            </summary>
+            <param name="devlist">The devlist pointer to store the result in</param>
+            <param name="ilen">The number of entries that the list can hold</param>
+            <param name="olen">A pointer to where the number of entries that were written will be stored</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_make_cred(Fido2Net.Interop.fido_dev_t*,Fido2Net.Interop.fido_cred_t*,System.String)">
+            <summary>
+            <para>Asks the FIDO device represented by dev to generate a new credential according to the following parameters defined in cred:</para>
+            type;
+            client data hash;
+            relying party;
+            user attributes;
+            list of excluded credential IDs;
+            resident key and user verification attributes.
+            <para>If a PIN is not needed to authenticate the request against dev, then pin may be NULL.Otherwise pin must point to a NUL-terminated UTF-8 string.</para>
+            <para>After a successful call, the <see cref="M:Fido2Net.Interop.Native.fido_cred_authdata_ptr(Fido2Net.Interop.fido_cred_t*)"/>, <see cref="M:Fido2Net.Interop.Native.fido_cred_pubkey_ptr(Fido2Net.Interop.fido_cred_t*)"/>,
+            <see cref="M:Fido2Net.Interop.Native.fido_cred_x5c_ptr(Fido2Net.Interop.fido_cred_t*)"/>, and <see cref="M:Fido2Net.Interop.Native.fido_cred_sig_ptr(Fido2Net.Interop.fido_cred_t*)"/> functions may be 
+            invoked on cred to retrieve the various parts of the generated credential.</para>
+            <para>Please note that this call is synchronous and will block if necessary.</para>
+            </summary>
+            <param name="dev">The device to act on</param>
+            <param name="cred">The credential to ac on</param>
+            <param name="pin">The pin of the device</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_open(Fido2Net.Interop.fido_dev_t*,System.String)">
+            <summary>
+            Opens the device pointed to by path, where dev is a freshly allocated or otherwise closed fido_dev_t.
+            </summary>
+            <param name="dev">The device handle to store the result</param>
+            <param name="path">The unique path to the device</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_reset(Fido2Net.Interop.fido_dev_t*)">
+            <summary>
+            Performs a reset on dev, resetting the device's PIN and erasing credentials stored on the device.
+            </summary>
+            <param name="dev">The device to act on</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_set_io_functions(Fido2Net.Interop.fido_dev_t*,Fido2Net.Interop.fido_dev_io_t*)">
+            <summary>
+            Defines the I/O handlers used to talk to dev. Its usage is optional. 
+            By default, libfido2 will use libhidapi to talk to a FIDO device.
+            </summary>
+            <param name="dev">The device to act on</param>
+            <param name="io">The I/O interface to use when interacting with the device</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_set_pin(Fido2Net.Interop.fido_dev_t*,System.String,System.String)">
+            <summary>
+            Sets the PIN of device dev to pin, where pin is a NUL-terminated UTF-8 string. 
+            If oldpin is not <c>null</c>, the device's PIN is changed from oldpin to pin, 
+            where pin and oldpin are NUL-terminated UTF-8 strings.
+            </summary>
+            <param name="dev">The device to act on</param>
+            <param name="pin">The pin to set</param>
+            <param name="oldpin">The existing pin</param>
+            <returns><see cref="F:Fido2Net.CtapStatus.Ok"/> on success, anything else on failure</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_authdata_len(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns the length of the authenticator data of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>The length of the authenticator data of statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_clientdata_hash_len(Fido2Net.Interop.fido_assert_t*)">
+            <summary>
+            Returns the length of the client data hash of assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <returns>The length of the client data hash of statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_count(Fido2Net.Interop.fido_assert_t*)">
+            <summary>
+            Gets the number of statements in this assertion
+            </summary>
+            <param name="assert">The assert to act on</param>
+            <returns>The number of statements in this assertion</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_hmac_secret_len(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns the length of the hmac-secret of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>The length of the hmac-secret of statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_id_len(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns the length of the ID of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>The length of the ID of statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_sig_len(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns the length of the signature of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>The length of the signature of statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_user_id_len(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Returns the length of the user ID of statement idx in assert
+            </summary>
+            <param name="assert">The assertion object to act on</param>
+            <param name="idx">The index to retrieve</param>
+            <returns>The length of the user ID of statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_aaguid_len(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns the length of the AAGUID in ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>The length of the AAGUID in ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_extensions_len(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns the length of the extensions in ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>The length of the extensions in ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_options_len(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns the length of the options in ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>The length of the options in ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_protocols_len(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns the length of the protocols in ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>The length of the protocols in ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_versions_len(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns the length of the versions in ci
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>The length of the versions in ci</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_authdata_len(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns the length of the authenticator data in cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>The length of the authenticator data in cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_clientdata_hash_len(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns the length of the client data hash in cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>The length of the client data hash in cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_id_len(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns the length of the ID in cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>The length of the ID in cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_pubkey_len(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns the length of the public key in cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>The length of the public key in cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_sig_len(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns the length of the signature in cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>The length of the signature in cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_x5c_len(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns the length of the attestation certificate in cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>The length of the attestation certificate in cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_assert_flags(Fido2Net.Interop.fido_assert_t*,System.UIntPtr)">
+            <summary>
+            Gets the flags that are set on statement idx in assert
+            </summary>
+            <param name="assert">The object to act on</param>
+            <param name="idx">The index of the statement to read</param>
+            <returns>The flags that are set on statement idx in assert</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cred_flags(Fido2Net.Interop.fido_cred_t*)">
+            <summary>
+            Returns the flags that are set on cred
+            </summary>
+            <param name="cred">The object to act on</param>
+            <returns>The flags that are set on cred</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_protocol(Fido2Net.Interop.fido_dev_t*)">
+            <summary>
+            Returns the protocol of the device
+            </summary>
+            <param name="dev">The object to act on</param>
+            <returns>The protocol of the device</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_major(Fido2Net.Interop.fido_dev_t*)">
+            <summary>
+            Returns the major version of the device
+            </summary>
+            <param name="dev">The object to act on</param>
+            <returns>The major version of the device</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_minor(Fido2Net.Interop.fido_dev_t*)">
+            <summary>
+            Returns the minor version of the device
+            </summary>
+            <param name="dev">The object to act on</param>
+            <returns>The minor version of the device</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_build(Fido2Net.Interop.fido_dev_t*)">
+            <summary>
+            Returns the build version of the device
+            </summary>
+            <param name="dev">The object to act on</param>
+            <returns>The build version of the device</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_flags(Fido2Net.Interop.fido_dev_t*)">
+            <summary>
+            Returns the capatbilities of the device
+            </summary>
+            <param name="dev">The object to act on</param>
+            <returns>The capabilities of the device</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_info_vendor(Fido2Net.Interop.fido_dev_info_t*)">
+            <summary>
+            Returns the vendor of the device
+            </summary>
+            <param name="di">The object to act on</param>
+            <returns>The vendor of the device</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_info_product(Fido2Net.Interop.fido_dev_info_t*)">
+            <summary>
+            Returns the product of the device
+            </summary>
+            <param name="di">The object to act on</param>
+            <returns>The product of the device</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_cbor_info_maxmsgsiz(Fido2Net.Interop.fido_cbor_info_t*)">
+            <summary>
+            Returns the max message size of the device
+            </summary>
+            <param name="ci">The object to act on</param>
+            <returns>The max message size of the device</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.Native.fido_dev_is_fido2(Fido2Net.Interop.fido_dev_t*)">
+            <summary>
+            Returns if device is capable of FIDO2
+            </summary>
+            <param name="dev">The object to act on</param>
+            <returns><c>true</c> if capable, otherwise <c>false</c></returns>
+        </member>
+        <member name="T:Fido2Net.Interop.ConstStringMarshaler">
+            <summary>
+            A custom marshaller to retrieve char* and const char* properties from
+            unmanaged code without freeing them (assumes the native library will
+            free them later)
+            </summary>
+        </member>
+        <member name="M:Fido2Net.Interop.ConstStringMarshaler.GetInstance(System.String)">
+            <summary>
+            Gets the global instance of this class as required by <see cref="T:System.Runtime.InteropServices.ICustomMarshaler"/>
+            </summary>
+            <param name="cookie">The cookie to use when getting the global instance (ignored)</param>
+            <returns>The global instance</returns>
+        </member>
+        <member name="M:Fido2Net.Interop.ConstStringMarshaler.CleanUpManagedData(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fido2Net.Interop.ConstStringMarshaler.CleanUpNativeData(System.IntPtr)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fido2Net.Interop.ConstStringMarshaler.GetNativeDataSize">
+            <inheritdoc />
+        </member>
+        <member name="M:Fido2Net.Interop.ConstStringMarshaler.MarshalManagedToNative(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:Fido2Net.Interop.ConstStringMarshaler.MarshalNativeToManaged(System.IntPtr)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
