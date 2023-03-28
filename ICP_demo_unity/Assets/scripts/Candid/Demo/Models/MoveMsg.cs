@@ -5,9 +5,9 @@ namespace Candid.Demo.Models
 	public class MoveMsg
 	{
 		[CandidName("dir")]
-		public sbyte Dir { get; set; }
+		public int Dir { get; set; }
 
-		public MoveMsg(sbyte dir)
+		public MoveMsg(int dir)
 		{
 			this.Dir = dir;
 		}

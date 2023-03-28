@@ -28,11 +28,11 @@ namespace Candid.Demo
 			return reply.ToObjects<Models.LoginResult>(this.Converter);
 		}
 
-		public async System.Threading.Tasks.Task<Models.LoginResult> MovePlayer(Models.MoveMsg arg0)
+		public async System.Threading.Tasks.Task<Models.MovePlayerResult> MovePlayer(Models.MoveMsg arg0)
 		{
 			CandidArg arg = CandidArg.FromCandid(CandidTypedValue.FromObject(arg0));
 			CandidArg reply = await this.Agent.CallAndWaitAsync(this.CanisterId, "movePlayer", arg);
-			return reply.ToObjects<Models.LoginResult>(this.Converter);
+			return reply.ToObjects<Models.MovePlayerResult>(this.Converter);
 		}
 
 		public async System.Threading.Tasks.Task<Models.UpdateMapResult> UpdateWorld()

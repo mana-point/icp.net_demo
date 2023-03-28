@@ -10,10 +10,20 @@ using UnityEngine.UI;
 
 public class MainGame : MonoBehaviour
 {
-	public GameObject playerPrefab;
-	public GameObject otherPlayerPrefab;
+	[SerializeField]
+	GameObject playerPrefab;
 
-	public Transform worldObj;
+	[SerializeField]
+	GameObject otherPlayerPrefab;
+
+	[SerializeField]
+	Transform worldObj;
+
+	[SerializeField]
+	public string mainCanisterId = "";
+
+	[SerializeField]
+	public bool useLocalhost = true;
 
 	GameObject playerObj = null;
 	Dictionary<string, GameObject> otherPlayerObjs = new Dictionary<string, GameObject>();
@@ -28,7 +38,11 @@ public class MainGame : MonoBehaviour
 	[SerializeField]
 	TextMeshProUGUI moveTimer;
 
+	ulong playerTimer = 0;
 	float updateTimer = 0;
+
+	bool isCalling = false;
+	string ourId = "";
 
 	// Start is called before the first frame update
 	void Start()
@@ -39,14 +53,46 @@ public class MainGame : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (BackendConnector.IsConnected)
+		if (BackendConnector.IsConnected && playerObj != null)
 		{
-			updateTimer += Time.deltaTime;
-
-			// update world map every 3 seconds
-			if (updateTimer > 3)
+			if (!isCalling)
 			{
-				updateCall();
+				updateTimer += Time.deltaTime;
+
+				// update world map every 3 seconds
+				if (updateTimer > 5)
+				{
+					updateCall();
+					updateTimer = 0;
+				}
+			}
+
+			DateTime time = Helpers.JavaTimeStampToDateTime(playerTimer);
+			int timeRemaining = Helpers.timeRemaining(time);
+
+			if (timeRemaining > 0)
+			{
+				moveTimer.text = "Move In: " + Helpers.getTimeString(timeRemaining);
+			}
+			else if (isCalling)
+			{
+				moveTimer.text = "Updating";
+			}
+			else
+			{
+				moveTimer.text = "Good to Move";
+
+				if (isCalling == false)
+				{
+					if (Input.GetKeyDown(KeyCode.W))
+						onMoveUp();
+					else if (Input.GetKeyDown(KeyCode.S))
+						onMoveDown();
+					else if (Input.GetKeyDown(KeyCode.A))
+						onMoveLeft();
+					else if (Input.GetKeyDown(KeyCode.D))
+						onMoveRight();
+				}
 			}
 		}
 	}
@@ -66,12 +112,12 @@ public class MainGame : MonoBehaviour
 
 	public void onMoveLeft()
 	{
-		movePlayer(0);
+		movePlayer(1);
 	}
 
 	public void onMoveRight()
 	{
-		movePlayer(1);
+		movePlayer(0);
 	}
 
 	public void onMoveUp()
@@ -92,9 +138,9 @@ public class MainGame : MonoBehaviour
 		if (!BackendConnector.IsConnected)
 		{
 			if (identity_json != null)
-				await BackendConnector.createIdentityByJsonAndConnect(identity_json, true);
+				await BackendConnector.createIdentityByJsonAndConnect(mainCanisterId, identity_json, useLocalhost);
 			else
-				await BackendConnector.ConnectICPNET(false, true);
+				await BackendConnector.ConnectICPNET(mainCanisterId, false, useLocalhost);
 		}
 
 		if (!BackendConnector.IsConnected)
@@ -103,13 +149,16 @@ public class MainGame : MonoBehaviour
 		// login
 		try
 		{
-			LoginResult result = await BackendConnector.mainClient.Login();
+			isCalling = true;
 
-			await UniTask.SwitchToMainThread();
+			LoginResult result = await BackendConnector.mainClient.Login();
 
 			if (result.Ok.GetValueOrDefault() != null)
 			{
 				Login login = result.Ok.GetValueOrDefault ();
+
+				await UniTask.SwitchToMainThread();
+
 				updateWorldMap(login.Map, login.Player);
 
 				mainMenu.gameObject.SetActive(false);
@@ -118,6 +167,8 @@ public class MainGame : MonoBehaviour
 			{
 				// show error
 			}
+
+			isCalling = false;
 		}
 		catch (Exception e)
 		{
@@ -129,13 +180,16 @@ public class MainGame : MonoBehaviour
 	{
 		try
 		{
-			UpdateMapResult result = await BackendConnector.mainClient.UpdateWorld();
+			isCalling = true;
 
-			await UniTask.SwitchToMainThread();
+			UpdateMapResult result = await BackendConnector.mainClient.UpdateWorld();
 
 			if (result.Ok.GetValueOrDefault() != null)
 			{
 				Map map = result.Ok.GetValueOrDefault();
+
+				await UniTask.SwitchToMainThread();
+
 				updateWorldMap(map);
 
 				mainMenu.gameObject.SetActive(false);
@@ -144,6 +198,8 @@ public class MainGame : MonoBehaviour
 			{
 				// show error
 			}
+
+			isCalling = false;
 		}
 		catch (Exception e)
 		{
@@ -156,15 +212,18 @@ public class MainGame : MonoBehaviour
 	{
 		try
 		{
-			MoveMsg moveMsg = new MoveMsg(direction);
-			LoginResult result = await BackendConnector.mainClient.MovePlayer(moveMsg);
+			isCalling = true;
 
-			await UniTask.SwitchToMainThread();
+			MoveMsg moveMsg = new MoveMsg(direction);
+			MovePlayerResult result = await BackendConnector.mainClient.MovePlayer(moveMsg);
 
 			if (result.Ok.GetValueOrDefault() != null)
 			{
-				Login login= result.Ok.GetValueOrDefault();
-				updateWorldMap(login.Map, login.Player);
+				MovePlayer moveResult = result.Ok.GetValueOrDefault();
+
+				await UniTask.SwitchToMainThread();
+
+				updateWorldMap(moveResult.Map, moveResult.Player);
 
 				mainMenu.gameObject.SetActive(false);
 			}
@@ -172,6 +231,8 @@ public class MainGame : MonoBehaviour
 			{
 				// show error
 			}
+
+			isCalling = false;
 		}
 		catch (Exception e)
 		{
@@ -184,13 +245,23 @@ public class MainGame : MonoBehaviour
 		// update player Obj
 		if (player != null)
 		{
+			playerTimer = player.LastTime;
+			ourId = player.Owner;
+
 			if (playerObj != null)
 			{
 				// update the player
+				playerObj.transform.position = new Vector3(player.Position.X, 0, player.Position.Y);
 			}
 			else
 			{
 				// create the player
+				playerObj = Instantiate<GameObject>(playerPrefab);
+
+				playerObj.transform.SetParent(worldObj);
+				playerObj.transform.localScale = Vector3.one;
+				playerObj.transform.rotation = Quaternion.identity;
+				playerObj.transform.position = new Vector3(player.Position.X, 0, player.Position.Y);
 			}
 		}
 
@@ -204,10 +275,21 @@ public class MainGame : MonoBehaviour
 				if (otherPlayerObjs.ContainsKey(playerInfo.Owner))
 				{
 					// update object
+					GameObject obj = otherPlayerObjs[playerInfo.Owner];
+
+					obj.transform.position = new Vector3(player.Position.X, 0, player.Position.Y);
 				}
-				else
+				else if (ourId != playerInfo.Owner)
 				{
 					// create a new Object
+					GameObject obj = Instantiate<GameObject>(otherPlayerPrefab);
+
+					obj.transform.SetParent(worldObj);
+					obj.transform.localScale = Vector3.one;
+					obj.transform.rotation = Quaternion.identity;
+					obj.transform.position = new Vector3(player.Position.X, 0, player.Position.Y);
+
+					otherPlayerObjs.Add (playerInfo.Owner, obj);
 				}
 			}
 		}
