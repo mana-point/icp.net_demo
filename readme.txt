@@ -15,6 +15,17 @@ To build this simple page, run "npm run build". The result will be built to the 
 
 3. The Unity Project. This connects to the II initially, while doing so it opens up a web browser and a local websocket. The webbrowser can be set in the Unity project, by selecting the MainGame object, and setting the URL of the DeepLiker. You will also need to set the Main Canister ID of the azle project in the Main Game script so that the unity client knows what client to connect to. Also set the useLocalhost bool to true if you are running local host or false if connecting to a live server.
 
+4. To allow unity to connect to the canister, you need to generate some c# and copy them from the demo_backend directory, to the unity/asset/scripts/Candid/Demo directory. To create these files run
+
+"rm -rf ./csharp"
+
+and
+
+"dotnet ./clientGenerator/EdjCase.ICP.ClientGenerator.dll ."
+
+Then copy the ./csharp directory to "ICP_Connection_demo/asset/scripts/Candid/Demo". Remove exsisting files first.
+
+
 
 
 email me at phil@manapoint.io if you have any questions.

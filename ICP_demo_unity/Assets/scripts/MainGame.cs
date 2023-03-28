@@ -42,6 +42,7 @@ public class MainGame : MonoBehaviour
 	float updateTimer = 0;
 
 	bool isCalling = false;
+	string ourId = "";
 
 	// Start is called before the first frame update
 	void Start()
@@ -72,6 +73,10 @@ public class MainGame : MonoBehaviour
 			if (timeRemaining > 0)
 			{
 				moveTimer.text = "Move In: " + Helpers.getTimeString(timeRemaining);
+			}
+			else if (isCalling)
+			{
+				moveTimer.text = "Updating";
 			}
 			else
 			{
@@ -107,12 +112,12 @@ public class MainGame : MonoBehaviour
 
 	public void onMoveLeft()
 	{
-		movePlayer(0);
+		movePlayer(1);
 	}
 
 	public void onMoveRight()
 	{
-		movePlayer(1);
+		movePlayer(0);
 	}
 
 	public void onMoveUp()
@@ -148,13 +153,11 @@ public class MainGame : MonoBehaviour
 
 			LoginResult result = await BackendConnector.mainClient.Login();
 
-			await UniTask.SwitchToMainThread();
-
 			if (result.Ok.GetValueOrDefault() != null)
 			{
 				Login login = result.Ok.GetValueOrDefault ();
 
-				UniTask.SwitchToMainThread();
+				await UniTask.SwitchToMainThread();
 
 				updateWorldMap(login.Map, login.Player);
 
@@ -181,12 +184,11 @@ public class MainGame : MonoBehaviour
 
 			UpdateMapResult result = await BackendConnector.mainClient.UpdateWorld();
 
-			await UniTask.SwitchToMainThread();
-
 			if (result.Ok.GetValueOrDefault() != null)
 			{
 				Map map = result.Ok.GetValueOrDefault();
-				UniTask.SwitchToMainThread();
+
+				await UniTask.SwitchToMainThread();
 
 				updateWorldMap(map);
 
@@ -213,17 +215,15 @@ public class MainGame : MonoBehaviour
 			isCalling = true;
 
 			MoveMsg moveMsg = new MoveMsg(direction);
-			LoginResult result = await BackendConnector.mainClient.MovePlayer(moveMsg);
-
-			await UniTask.SwitchToMainThread();
+			MovePlayerResult result = await BackendConnector.mainClient.MovePlayer(moveMsg);
 
 			if (result.Ok.GetValueOrDefault() != null)
 			{
-				Login login= result.Ok.GetValueOrDefault();
+				MovePlayer moveResult = result.Ok.GetValueOrDefault();
 
-				UniTask.SwitchToMainThread();
+				await UniTask.SwitchToMainThread();
 
-				updateWorldMap(login.Map, login.Player);
+				updateWorldMap(moveResult.Map, moveResult.Player);
 
 				mainMenu.gameObject.SetActive(false);
 			}
@@ -246,6 +246,7 @@ public class MainGame : MonoBehaviour
 		if (player != null)
 		{
 			playerTimer = player.LastTime;
+			ourId = player.Owner;
 
 			if (playerObj != null)
 			{
@@ -278,7 +279,7 @@ public class MainGame : MonoBehaviour
 
 					obj.transform.position = new Vector3(player.Position.X, 0, player.Position.Y);
 				}
-				else
+				else if (ourId != playerInfo.Owner)
 				{
 					// create a new Object
 					GameObject obj = Instantiate<GameObject>(otherPlayerPrefab);
