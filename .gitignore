@@ -42,3 +42,5 @@ Server/
 # frontend code
 */node_modules/
 */dist/
+*.csproj
+*.sln
