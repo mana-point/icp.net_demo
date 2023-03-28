@@ -27,7 +27,7 @@ Server/
 [Mm]emoryCaptures/
 
 
-
+*/*.Identifier
 
 # Mac OSX temporary files
 .DS_Store
