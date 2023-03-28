@@ -1209,6 +1209,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 5213509122357706462, guid: 42f631ca1001ba0428b635c8bd57ff98, type: 3}
   otherPlayerPrefab: {fileID: 6245930997314005061, guid: b64c394b247e4c14c96b53d3614c29ab, type: 3}
   worldObj: {fileID: 1813158654}
+  mainCanisterId: qaa6y-5yaaa-aaaaa-aaafa-cai
   mainMenu: {fileID: 687497785}
   connectBtn: {fileID: 255595544}
   moveTimer: {fileID: 1136152965}

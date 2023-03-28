@@ -22,6 +22,9 @@ public class MainGame : MonoBehaviour
 	[SerializeField]
 	public string mainCanisterId = "";
 
+	[SerializeField]
+	public bool useLocalhost = true;
+
 	GameObject playerObj = null;
 	Dictionary<string, GameObject> otherPlayerObjs = new Dictionary<string, GameObject>();
 
@@ -49,14 +52,18 @@ public class MainGame : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (BackendConnector.IsConnected)
+		if (BackendConnector.IsConnected && playerObj != null)
 		{
-			updateTimer += Time.deltaTime;
-
-			// update world map every 3 seconds
-			if (updateTimer > 3)
+			if (!isCalling)
 			{
-				updateCall();
+				updateTimer += Time.deltaTime;
+
+				// update world map every 3 seconds
+				if (updateTimer > 5)
+				{
+					updateCall();
+					updateTimer = 0;
+				}
 			}
 
 			DateTime time = Helpers.JavaTimeStampToDateTime(playerTimer);
@@ -72,13 +79,13 @@ public class MainGame : MonoBehaviour
 
 				if (isCalling == false)
 				{
-					if (Input.GetKeyDown("W"))
+					if (Input.GetKeyDown(KeyCode.W))
 						onMoveUp();
-					else if (Input.GetKeyDown("S"))
+					else if (Input.GetKeyDown(KeyCode.S))
 						onMoveDown();
-					else if (Input.GetKeyDown("A"))
+					else if (Input.GetKeyDown(KeyCode.A))
 						onMoveLeft();
-					else if (Input.GetKeyDown("D"))
+					else if (Input.GetKeyDown(KeyCode.D))
 						onMoveRight();
 				}
 			}
@@ -126,9 +133,9 @@ public class MainGame : MonoBehaviour
 		if (!BackendConnector.IsConnected)
 		{
 			if (identity_json != null)
-				await BackendConnector.createIdentityByJsonAndConnect(mainCanisterId, identity_json, true);
+				await BackendConnector.createIdentityByJsonAndConnect(mainCanisterId, identity_json, useLocalhost);
 			else
-				await BackendConnector.ConnectICPNET(mainCanisterId, false, true);
+				await BackendConnector.ConnectICPNET(mainCanisterId, false, useLocalhost);
 		}
 
 		if (!BackendConnector.IsConnected)
@@ -137,6 +144,8 @@ public class MainGame : MonoBehaviour
 		// login
 		try
 		{
+			isCalling = true;
+
 			LoginResult result = await BackendConnector.mainClient.Login();
 
 			await UniTask.SwitchToMainThread();
@@ -144,6 +153,9 @@ public class MainGame : MonoBehaviour
 			if (result.Ok.GetValueOrDefault() != null)
 			{
 				Login login = result.Ok.GetValueOrDefault ();
+
+				UniTask.SwitchToMainThread();
+
 				updateWorldMap(login.Map, login.Player);
 
 				mainMenu.gameObject.SetActive(false);
@@ -152,6 +164,8 @@ public class MainGame : MonoBehaviour
 			{
 				// show error
 			}
+
+			isCalling = false;
 		}
 		catch (Exception e)
 		{
@@ -163,6 +177,8 @@ public class MainGame : MonoBehaviour
 	{
 		try
 		{
+			isCalling = true;
+
 			UpdateMapResult result = await BackendConnector.mainClient.UpdateWorld();
 
 			await UniTask.SwitchToMainThread();
@@ -170,6 +186,8 @@ public class MainGame : MonoBehaviour
 			if (result.Ok.GetValueOrDefault() != null)
 			{
 				Map map = result.Ok.GetValueOrDefault();
+				UniTask.SwitchToMainThread();
+
 				updateWorldMap(map);
 
 				mainMenu.gameObject.SetActive(false);
@@ -178,6 +196,8 @@ public class MainGame : MonoBehaviour
 			{
 				// show error
 			}
+
+			isCalling = false;
 		}
 		catch (Exception e)
 		{
@@ -190,6 +210,8 @@ public class MainGame : MonoBehaviour
 	{
 		try
 		{
+			isCalling = true;
+
 			MoveMsg moveMsg = new MoveMsg(direction);
 			LoginResult result = await BackendConnector.mainClient.MovePlayer(moveMsg);
 
@@ -198,6 +220,9 @@ public class MainGame : MonoBehaviour
 			if (result.Ok.GetValueOrDefault() != null)
 			{
 				Login login= result.Ok.GetValueOrDefault();
+
+				UniTask.SwitchToMainThread();
+
 				updateWorldMap(login.Map, login.Player);
 
 				mainMenu.gameObject.SetActive(false);
@@ -206,6 +231,8 @@ public class MainGame : MonoBehaviour
 			{
 				// show error
 			}
+
+			isCalling = false;
 		}
 		catch (Exception e)
 		{
