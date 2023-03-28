@@ -19,9 +19,6 @@ namespace Candid
 	{
 		public static bool IsConnected = false;
 
-		// need to expose somehow
-		private static string mainCanisterId = "qaa6y-5yaaa-aaaaa-aaafa-cai";
-
 		// ICP.net 
 		public static DelegationIdentity identity;
 		public static DemoApiClient mainClient;
@@ -29,7 +26,7 @@ namespace Candid
 
 		public static ulong anchorId = 1;
 
-		public static async Task ConnectICPNET(bool useAnon = false, bool useLocalHost = false)
+		public static async Task ConnectICPNET(string mainCanisterId, bool useAnon = false, bool useLocalHost = false)
 		{
 			Debug.Log("ConnectICPNET");
 
@@ -76,7 +73,7 @@ namespace Candid
 			}
 		}
 
-		public static async Task createIdentityByJsonAndConnect(string json, bool useLocalHost = false)
+		public static async Task createIdentityByJsonAndConnect(string mainCanisterId, string json, bool useLocalHost = false)
 		{
 			try
 			{
