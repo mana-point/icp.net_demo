@@ -156,6 +156,7 @@ export function movePlayer (moveMsg : moveMsg): MovePlayerResult
 
     // create player if he is new
     if (state.players[caller] === undefined) {
+        ic.print ("No Player");
         return {
             ok: null,
             error: { msg: "No such player"}
@@ -170,6 +171,8 @@ export function movePlayer (moveMsg : moveMsg): MovePlayerResult
     // check the players move time
     if (player.lastTime + 5000n > time)
     {
+        ic.print ("Can't Move yet");
+
         return {
             ok: null,
             error: {msg: "Player unable to move"}
@@ -186,7 +189,8 @@ export function movePlayer (moveMsg : moveMsg): MovePlayerResult
     else if (moveMsg.dir == 3 && player.position.y > -10)
        player.position.y--;
 
-    player.lastTime = time;
+    // force player to wait 10s
+    player.lastTime = time + 10000n;
 
     var moveResult : MovePlayer = {
         time: time,
