@@ -41,12 +41,14 @@ public class MainGame : MonoBehaviour
 	ulong playerTimer = 0;
 	float updateTimer = 0;
 
+	bool isUpdating = false;
 	bool isCalling = false;
 	string ourId = "";
 
 	// Start is called before the first frame update
 	void Start()
 	{
+		Debug.Log("Starting");
 		moveTimer.text = "";
 	}
 
@@ -55,7 +57,7 @@ public class MainGame : MonoBehaviour
 	{
 		if (BackendConnector.IsConnected && playerObj != null)
 		{
-			if (!isCalling)
+			if (!isUpdating)
 			{
 				updateTimer += Time.deltaTime;
 
@@ -76,7 +78,7 @@ public class MainGame : MonoBehaviour
 			}
 			else if (isCalling)
 			{
-				moveTimer.text = "Updating";
+				moveTimer.text = "Moving";
 			}
 			else
 			{
@@ -100,6 +102,8 @@ public class MainGame : MonoBehaviour
 	// press button
 	public void OnConnectedToServer()
 	{
+		Debug.Log("Start Login");
+
 		connectBtn.interactable = false;
 
 		DeepLinker.instance.HandleConnection(onLoginCompleted);
@@ -132,7 +136,7 @@ public class MainGame : MonoBehaviour
 
 	public async UniTask LoginCompleted(string identity_json = null)
 	{
-		Debug.Log("LoadGameData");
+		Debug.Log("LoginCompleted");
 
 		// connect to backend
 		if (!BackendConnector.IsConnected)
@@ -151,10 +155,16 @@ public class MainGame : MonoBehaviour
 		{
 			isCalling = true;
 
+			Debug.Log("Connecting...");
+
 			LoginResult result = await BackendConnector.mainClient.Login();
+
+			Debug.Log("Check results");
 
 			if (result.Ok.GetValueOrDefault() != null)
 			{
+				Debug.Log("Got initial state");
+
 				Login login = result.Ok.GetValueOrDefault ();
 
 				await UniTask.SwitchToMainThread();
@@ -165,14 +175,14 @@ public class MainGame : MonoBehaviour
 			}
 			else
 			{
-				// show error
+				Debug.Log("Error: " + result.Error.ToString ());
 			}
 
 			isCalling = false;
 		}
 		catch (Exception e)
 		{
-			Debug.Log(e);
+			Debug.Log("Exception: " + e.Message);
 		}
 	}
 
@@ -180,7 +190,7 @@ public class MainGame : MonoBehaviour
 	{
 		try
 		{
-			isCalling = true;
+			isUpdating = true;
 
 			UpdateMapResult result = await BackendConnector.mainClient.UpdateWorld();
 
@@ -199,7 +209,7 @@ public class MainGame : MonoBehaviour
 				// show error
 			}
 
-			isCalling = false;
+			isUpdating = false;
 		}
 		catch (Exception e)
 		{
