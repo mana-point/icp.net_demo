@@ -15,8 +15,7 @@ document.getElementById("click").addEventListener("click", async (e) => {
   return false;
 });
 
-// open web socket
-const webSocket = new WebSocket('ws://localhost:8080/chat');
+const webSocket = new WebSocket('ws://localhost:8080/data');
 
 webSocket.addEventListener('open', () => {
     console.log('WebSocket connection established.');
