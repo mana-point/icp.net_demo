@@ -28,7 +28,7 @@ namespace Candid
 
 		public static async Task ConnectICPNET(string mainCanisterId, bool useAnon = false, bool useLocalHost = false)
 		{
-			Debug.Log("ConnectICPNET");
+			Debug.Log("Connect via ICPNET");
 
 			try
 			{
@@ -51,7 +51,7 @@ namespace Candid
 					}
 
 					identity = result.GetIdentityOrThrow();
-					agent = new HttpAgent(identity);    // use the ID
+					agent = new HttpAgent(identity); // use the ID
 				}
 				else
 				{
@@ -66,6 +66,8 @@ namespace Candid
 				mainClient = new DemoApiClient(agent, mainId);
 
 				IsConnected = true;
+
+				Debug.Log("Connected");
 			}
 			catch (Exception e)
 			{
@@ -75,6 +77,8 @@ namespace Candid
 
 		public static async Task createIdentityByJsonAndConnect(string mainCanisterId, string json, bool useLocalHost = false)
 		{
+			Debug.Log("Connect via ICPNET");
+
 			try
 			{
 				identity = await SetIdentityAsync(json);
@@ -82,13 +86,15 @@ namespace Candid
 				if (useLocalHost)
 					agent = new HttpAgent(identity, new Uri("http://localhost:4943"));
 				else
-					agent = new HttpAgent(identity); // use Anon ID
+					agent = new HttpAgent(identity);
 
 				// connect to main
 				var mainId = Principal.FromText(mainCanisterId);
 				mainClient = new DemoApiClient(agent, mainId);
 
 				IsConnected = true;
+
+				Debug.Log("Connected");
 			}
 			catch (Exception e) 
 			{
