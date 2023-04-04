@@ -138,6 +138,14 @@ public class MainGame : MonoBehaviour
 	{
 		Debug.Log("LoginCompleted");
 
+		await UniTask.SwitchToMainThread();
+
+		mainMenu.gameObject.SetActive(false);
+
+		moveTimer.text = "Creating Identity";
+
+		await UniTask.SwitchToThreadPool();
+
 		// connect to backend
 		if (!BackendConnector.IsConnected)
 		{
@@ -153,6 +161,12 @@ public class MainGame : MonoBehaviour
 		// login
 		try
 		{
+			await UniTask.SwitchToMainThread();
+
+			moveTimer.text = "Calling Backend for initial data";
+
+			await UniTask.SwitchToThreadPool();
+
 			isCalling = true;
 
 			Debug.Log("Connecting...");
@@ -170,8 +184,6 @@ public class MainGame : MonoBehaviour
 				await UniTask.SwitchToMainThread();
 
 				updateWorldMap(login.Map, login.Player);
-
-				mainMenu.gameObject.SetActive(false);
 			}
 			else
 			{
