@@ -299,7 +299,7 @@ public class MainGame : MonoBehaviour
 					// update object
 					GameObject obj = otherPlayerObjs[playerInfo.Owner];
 
-					obj.transform.position = new Vector3(player.Position.X, 0, player.Position.Y);
+					obj.transform.position = new Vector3(player.Position.X, 1, player.Position.Y);
 				}
 				else if (ourId != playerInfo.Owner)
 				{
@@ -309,7 +309,7 @@ public class MainGame : MonoBehaviour
 					obj.transform.SetParent(worldObj);
 					obj.transform.localScale = Vector3.one;
 					obj.transform.rotation = Quaternion.identity;
-					obj.transform.position = new Vector3(playerInfo.Position.X, 0, playerInfo.Position.Y);
+					obj.transform.position = new Vector3(playerInfo.Position.X, 0.5f, playerInfo.Position.Y);
 
 					otherPlayerObjs.Add (playerInfo.Owner, obj);
 				}
