@@ -26,18 +26,6 @@
           }
         }
       },
-      "Dahomey.Cbor/1.20.1": {
-        "dependencies": {
-          "System.Collections.Immutable": "6.0.0",
-          "System.IO.Pipelines": "6.0.3"
-        },
-        "runtime": {
-          "lib/netstandard2.0/Dahomey.Cbor.dll": {
-            "assemblyVersion": "1.20.1.0",
-            "fileVersion": "1.20.1.0"
-          }
-        }
-      },
       "Microsoft.Bcl.HashCode/1.1.1": {
         "runtime": {
           "lib/netstandard2.1/Microsoft.Bcl.HashCode.dll": {
@@ -54,18 +42,6 @@
           }
         }
       },
-      "System.Collections.Immutable/6.0.0": {
-        "dependencies": {
-          "System.Memory": "4.5.5",
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/System.Collections.Immutable.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.21.52210"
-          }
-        }
-      },
       "System.Formats.Asn1/7.0.0": {
         "dependencies": {
           "System.Buffers": "4.5.1",
@@ -78,16 +54,17 @@
           }
         }
       },
-      "System.IO.Pipelines/6.0.3": {
+      "System.Formats.Cbor/7.0.0": {
         "dependencies": {
+          "Microsoft.Bcl.HashCode": "1.1.1",
           "System.Buffers": "4.5.1",
           "System.Memory": "4.5.5",
-          "System.Threading.Tasks.Extensions": "4.5.4"
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         },
         "runtime": {
-          "lib/netstandard2.0/System.IO.Pipelines.dll": {
-            "assemblyVersion": "6.0.0.0",
-            "fileVersion": "6.0.522.21309"
+          "lib/netstandard2.0/System.Formats.Cbor.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51805"
           }
         }
       },
@@ -128,17 +105,6 @@
           }
         }
       },
-      "System.Threading.Tasks.Extensions/4.5.4": {
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
-        },
-        "runtime": {
-          "lib/netstandard2.0/System.Threading.Tasks.Extensions.dll": {
-            "assemblyVersion": "4.2.0.1",
-            "fileVersion": "4.6.28619.1"
-          }
-        }
-      },
       "Vsxmd/1.4.4": {},
       "EdjCase.Cryptography.BLS/1.0.0": {
         "runtime": {
@@ -148,9 +114,9 @@
       "EdjCase.ICP.Agent/1.0.0": {
         "dependencies": {
           "Chaos.NaCl.Standard": "1.0.0",
-          "Dahomey.Cbor": "1.20.1",
           "EdjCase.Cryptography.BLS": "1.0.0",
-          "EdjCase.ICP.Candid": "1.0.0"
+          "EdjCase.ICP.Candid": "1.0.0",
+          "System.Formats.Cbor": "7.0.0"
         },
         "runtime": {
           "EdjCase.ICP.Agent.dll": {}
@@ -190,13 +156,6 @@
       "path": "chaos.nacl.standard/1.0.0",
       "hashPath": "chaos.nacl.standard.1.0.0.nupkg.sha512"
     },
-    "Dahomey.Cbor/1.20.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-tajH2WyFyPfvbl4dR+YB85WAWE60kBT5vkpQJzRyUhVFLGBMcrKkRMvh778Toc/m/34bG6zNKZ+n/pq4mf0/mA==",
-      "path": "dahomey.cbor/1.20.1",
-      "hashPath": "dahomey.cbor.1.20.1.nupkg.sha512"
-    },
     "Microsoft.Bcl.HashCode/1.1.1": {
       "type": "package",
       "serviceable": true,
@@ -211,13 +170,6 @@
       "path": "system.buffers/4.5.1",
       "hashPath": "system.buffers.4.5.1.nupkg.sha512"
     },
-    "System.Collections.Immutable/6.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-l4zZJ1WU2hqpQQHXz1rvC3etVZN+2DLmQMO79FhOTZHMn8tDRr+WU287sbomD0BETlmKDn0ygUgVy9k5xkkJdA==",
-      "path": "system.collections.immutable/6.0.0",
-      "hashPath": "system.collections.immutable.6.0.0.nupkg.sha512"
-    },
     "System.Formats.Asn1/7.0.0": {
       "type": "package",
       "serviceable": true,
@@ -225,12 +177,12 @@
       "path": "system.formats.asn1/7.0.0",
       "hashPath": "system.formats.asn1.7.0.0.nupkg.sha512"
     },
-    "System.IO.Pipelines/6.0.3": {
+    "System.Formats.Cbor/7.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ryTgF+iFkpGZY1vRQhfCzX0xTdlV3pyaTTqRu2ETbEv+HlV7O6y7hyQURnghNIXvctl5DuZ//Dpks6HdL/Txgw==",
-      "path": "system.io.pipelines/6.0.3",
-      "hashPath": "system.io.pipelines.6.0.3.nupkg.sha512"
+      "sha512": "sha512-2DvlHGwr0hEXXRv/8j9x4fw9yqJ7638qusWsf3iruVUmRb+mWl5ODSZRtXe5ZH62/0R6qf/QxA8JTrhIRvWlXw==",
+      "path": "system.formats.cbor/7.0.0",
+      "hashPath": "system.formats.cbor.7.0.0.nupkg.sha512"
     },
     "System.Memory/4.5.5": {
       "type": "package",
@@ -259,13 +211,6 @@
       "sha512": "sha512-WG3r7EyjUe9CMPFSs6bty5doUqT+q9pbI80hlNzo2SkPkZ4VTuZkGWjpp77JB8+uaL4DFPRdBsAY+DX3dBK92A==",
       "path": "system.security.cryptography.cng/4.5.0",
       "hashPath": "system.security.cryptography.cng.4.5.0.nupkg.sha512"
-    },
-    "System.Threading.Tasks.Extensions/4.5.4": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-zteT+G8xuGu6mS+mzDzYXbzS7rd3K6Fjb9RiZlYlJPam2/hU7JCBZBVEcywNuR+oZ1ncTvc/cq0faRr3P01OVg==",
-      "path": "system.threading.tasks.extensions/4.5.4",
-      "hashPath": "system.threading.tasks.extensions.4.5.4.nupkg.sha512"
     },
     "Vsxmd/1.4.4": {
       "type": "package",

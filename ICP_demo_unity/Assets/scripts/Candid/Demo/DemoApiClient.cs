@@ -4,6 +4,7 @@ using EdjCase.ICP.Candid;
 using Candid.Demo;
 using EdjCase.ICP.Agent.Responses;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Candid.Demo
 {
@@ -24,6 +25,7 @@ namespace Candid.Demo
 
 		public async System.Threading.Tasks.Task<Models.LoginResult> Login()
 		{
+			UnityEngine.Debug.Log("Login");
 			CandidArg arg = CandidArg.FromCandid();
 			CandidArg reply = await this.Agent.CallAndWaitAsync(this.CanisterId, "login", arg);
 			return reply.ToObjects<Models.LoginResult>(this.Converter);

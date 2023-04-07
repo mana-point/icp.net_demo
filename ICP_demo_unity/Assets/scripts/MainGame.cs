@@ -2,7 +2,6 @@ using Candid;
 using Candid.Demo.Models;
 using Cysharp.Threading.Tasks;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -105,7 +104,7 @@ public class MainGame : MonoBehaviour
 		Debug.Log("Start Login");
 
 		connectBtn.interactable = false;
-
+		
 		DeepLinker.instance.HandleConnection(onLoginCompleted);
 	}
 
