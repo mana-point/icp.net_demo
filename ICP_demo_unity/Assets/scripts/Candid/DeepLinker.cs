@@ -77,7 +77,9 @@ namespace Candid
 
 			callback = null;
 
-			Debug.Log("CloseSocket");
+			Debug.Log("Close Web Socket");
+
+			wssv.RemoveWebSocketService("/data");
 			wssv.Stop();
 			wssv = null;
 		}

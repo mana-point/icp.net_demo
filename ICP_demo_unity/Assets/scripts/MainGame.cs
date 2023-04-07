@@ -138,6 +138,14 @@ public class MainGame : MonoBehaviour
 	{
 		Debug.Log("LoginCompleted");
 
+		await UniTask.SwitchToMainThread();
+
+		mainMenu.gameObject.SetActive(false);
+
+		moveTimer.text = "Creating Identity";
+
+		await UniTask.SwitchToThreadPool();
+
 		// connect to backend
 		if (!BackendConnector.IsConnected)
 		{
@@ -153,6 +161,12 @@ public class MainGame : MonoBehaviour
 		// login
 		try
 		{
+			await UniTask.SwitchToMainThread();
+
+			moveTimer.text = "Calling Backend for initial data";
+
+			await UniTask.SwitchToThreadPool();
+
 			isCalling = true;
 
 			Debug.Log("Connecting...");
@@ -170,8 +184,6 @@ public class MainGame : MonoBehaviour
 				await UniTask.SwitchToMainThread();
 
 				updateWorldMap(login.Map, login.Player);
-
-				mainMenu.gameObject.SetActive(false);
 			}
 			else
 			{
@@ -287,7 +299,7 @@ public class MainGame : MonoBehaviour
 					// update object
 					GameObject obj = otherPlayerObjs[playerInfo.Owner];
 
-					obj.transform.position = new Vector3(player.Position.X, 0, player.Position.Y);
+					obj.transform.position = new Vector3(player.Position.X, 1, player.Position.Y);
 				}
 				else if (ourId != playerInfo.Owner)
 				{
@@ -297,7 +309,7 @@ public class MainGame : MonoBehaviour
 					obj.transform.SetParent(worldObj);
 					obj.transform.localScale = Vector3.one;
 					obj.transform.rotation = Quaternion.identity;
-					obj.transform.position = new Vector3(player.Position.X, 0, player.Position.Y);
+					obj.transform.position = new Vector3(playerInfo.Position.X, 0.5f, playerInfo.Position.Y);
 
 					otherPlayerObjs.Add (playerInfo.Owner, obj);
 				}
