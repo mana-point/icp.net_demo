@@ -5,14 +5,19 @@ export class MyStorage implements AuthClientStorage
     myState : string = "";
  
     async get(key: string): Promise<string | null> {
-        return this.myState;
+      this.myState = JSON.parse (localStorage.getItem(key));
+
+      return this.myState;
     } 
  
     async set(key: string, value: string): Promise<void> {
-       this.myState = value;
+      localStorage.setItem(key, JSON.stringify(value));
+
+      this.myState = value;
     }
  
     async remove(key: string): Promise<void> {
-       this.myState = undefined;
+       this.myState = "";
+       localStorage.removeItem (key);
     }
  }

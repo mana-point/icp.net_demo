@@ -43,6 +43,7 @@
   "dependencies": {
     "@dfinity/auth-client": "^0.15.4",
     "@dfinity/identity": "^0.15.3",
+    "ws": "^8.13.0",
     "zlib": "^1.0.5"
   }
 }
