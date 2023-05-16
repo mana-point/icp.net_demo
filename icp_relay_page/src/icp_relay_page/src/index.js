@@ -3,7 +3,17 @@ import { HttpAgent } from "@dfinity/agent";
 import { MyStorage } from "./MyStorage";
 
 var identity = null;
-var storage = new MyStorage ();
+var url = new URL(window.location.href);
+var localhost = url.searchParams.get("localhost");
+var storeName = "LiveStorage";
+var identityProvider = "https://identity.ic0.app/#authorize";
+if (localhost)
+{
+  identityProvider = "http://localhost:4943?canisterId=qjdve-lqaaa-aaaaa-aaaeq-cai#authorize"; // localhost
+  storeName = "LocalhostStorage";
+}
+
+var storage = new MyStorage (storeName);
 
 document.getElementById("click").addEventListener("click", async (e) => {
   e.preventDefault();
@@ -35,17 +45,27 @@ function sendMessage(message) {
 
 export async function GetIdentity() {
   try {
-/*
+    var authClient = await AuthClient.create({
+      storage: storage,
+      keyType: 'Ed25519',
+    });
+
+    const daysToAdd = 3;
+    const expiry = Date.now() + (daysToAdd * 86400000);
+
+    const isAuth =  await authClient.isAuthenticated();
+    if (isAuth) {
+      console.log("setLoggedIn "+isAuth);
+      const identity = await authClient.getIdentity();
+      sendMessage (JSON.stringify (identity));
+    }
+    else
+    {
       // NFID
-      const APPLICATION_NAME = "Dragginz";
+/*      const APPLICATION_NAME = "ICP.net Demo";
       const APPLICATION_LOGO_URL = "https://cdn.glitch.global/bcd5284d-ad10-482d-bcea-f96a80f01aa7/avatar.png?v=1675867411047";
       const AUTH_PATH = "/authenticate/?applicationName=" + APPLICATION_NAME + "&applicationLogo=" + APPLICATION_LOGO_URL + "#authorize";
       const NFID_AUTH_URL = "https://nfid.one" + AUTH_PATH;
-
-      const authClient = await AuthClient.create({
-        storage: storage,
-        keyType: 'Ed25519',
-      });
 
       await new Promise((resolve, reject) => {
           authClient.login({
@@ -58,42 +78,28 @@ export async function GetIdentity() {
               onError: reject,
           });
       });
-      
+    
       identity = authClient.getIdentity();
       sendMessage (JSON.stringify (identity));
+      // end of NFID
 */
-      //II Connect
-      const daysToAdd = 3;
-      const expiry = Date.now() + (daysToAdd * 86400000);
-
-      window.HttpAgentType = HttpAgent;
-      window.authClient = await AuthClient.create({
-        storage: storage,
-        keyType: 'Ed25519',
-      });
-
-      const isAuth =  await authClient.isAuthenticated();
-      if (isAuth) {
-        console.log("setLoggedIn "+isAuth);
-        const identity = await authClient.getIdentity();
-        sendMessage (JSON.stringify (identity));
-      }
-      else
-      {
-        await authClient.login({
-          onSuccess: async () => {
-            identity = await authClient.getIdentity();
-            sendMessage (JSON.stringify (identity));
-          },
-          onError: (error) => {
-            console.log (error);
-          },
-          maxTimeToLive: BigInt(expiry * 1000000),
+      // II      
+      await authClient.login({
+        onSuccess: async () => {
+          identity = await authClient.getIdentity();
+          sendMessage (JSON.stringify (identity));
+        },
+        onError: (error) => {
+          console.log (error);
+        },
+        maxTimeToLive: BigInt(expiry * 1000000),
 //        identityProvider: "https://identity.ic0.app/#authorize"
-          identityProvider: "http://localhost:4943?canisterId=qaa6y-5yaaa-aaaaa-aaafa-cai#authorize"
-        });
-      }
-    } catch (e) {
-      console.error(e);
+//        identityProvider: "http://localhost:4943?canisterId=qjdve-lqaaa-aaaaa-aaaeq-cai#authorize"
+        identityProvider: identityProvider
+      });
+      // end of II
+    }
+  } catch (e) {
+    console.error(e);
   }
 }
