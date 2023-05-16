@@ -299,7 +299,7 @@ public class MainGame : MonoBehaviour
 					// update object
 					GameObject obj = otherPlayerObjs[playerInfo.Owner];
 
-					obj.transform.position = new Vector3(player.Position.X, 1, player.Position.Y);
+					obj.transform.position = new Vector3(playerInfo.Position.X, 1, playerInfo.Position.Y);
 				}
 				else if (ourId != playerInfo.Owner)
 				{
