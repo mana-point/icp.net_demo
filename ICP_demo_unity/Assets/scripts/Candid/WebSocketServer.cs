@@ -46,6 +46,9 @@ namespace Candid
 
 		public void HandleConnection(Action<string> _callback = null, bool useLocalhost = false, string localHost = "")
 		{
+			if (callback != null)
+				return;
+
 			callback = _callback;
 			StartSocket();
 
@@ -55,8 +58,6 @@ namespace Candid
 				Application.OpenURL("https://cautious-leather-textbook.glitch.me?localhost=" + localHost);
 			else
 				Application.OpenURL("https://cautious-leather-textbook.glitch.me");
-
-			Application.OpenURL(url);
 		}
 
 		WebSocketSharp.Server.WebSocketServer wssv;
@@ -87,6 +88,8 @@ namespace Candid
 			wssv.RemoveWebSocketService("/data");
 			wssv.Stop();
 			wssv = null;
+
+			callback = null;
 		}
 	}
 }
