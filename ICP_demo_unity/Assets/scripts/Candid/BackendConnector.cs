@@ -4,14 +4,14 @@ using System.Threading.Tasks;
 using EdjCase.ICP.Agent.Agents;
 using EdjCase.ICP.Candid.Models;
 using UnityEditor;
-using EdjCase.ICP.InternetIdentity;
 using EdjCase.ICP.Agent.Identities;
 using EdjCase.ICP.Agent.Models;
-using EdjCase.ICP.Agent;
 using System.Collections.Generic;
 using System.Linq;
 using Candid.Demo;
 using LitJson;
+using Candid.Demo.Models;
+using EdjCase.ICP.Agent;
 
 namespace Candid
 {
@@ -25,55 +25,6 @@ namespace Candid
 		public static IAgent agent;
 
 		public static ulong anchorId = 1;
-
-		public static async Task ConnectICPNET(string mainCanisterId, bool useAnon = false, bool useLocalHost = false)
-		{
-			Debug.Log("Connect via ICPNET");
-
-			try
-			{
-				// get identity and agent
-				if (!useAnon)
-				{
-					LoginResult result;
-
-					if (useLocalHost)
-					{
-						result = await Authenticator
-							.WithHttpAgent(new Uri("http://localhost:4943")) // Use http agent to communicate to the Internet Identity canister
-							.LoginAsync(anchorId, "nns.ic0.app");
-					}
-					else
-					{
-						result = await Authenticator
-							.WithHttpAgent() // Use http agent to communicate to the Internet Identity canister
-							.LoginAsync(anchorId, "nns.ic0.app");
-					}
-
-					identity = result.GetIdentityOrThrow();
-					agent = new HttpAgent(identity); // use the ID
-				}
-				else
-				{
-					if (useLocalHost)
-						agent = new HttpAgent(null, new Uri("http://localhost:4943")); // use Anon ID
-					else
-						agent = new HttpAgent(); // use Anon ID
-				}
-
-				// connect to canister
-				var mainId = Principal.FromText(mainCanisterId);
-				mainClient = new DemoApiClient(agent, mainId);
-
-				IsConnected = true;
-
-				Debug.Log("Connected");
-			}
-			catch (Exception e)
-			{
-				Debug.Log(e.ToString());
-			}
-		}
 
 		public static async Task createIdentityByJsonAndConnect(string mainCanisterId, string json, bool useLocalHost = false)
 		{
@@ -109,12 +60,9 @@ namespace Candid
 
 			if (info != null)
 			{
-				byte[] publicKeyBytes = FromHexString(info.identity[0]);
-				var publicKey = DerEncodedPublicKey.FromDer(publicKeyBytes);
 				byte[] privateKey = FromHexString(info.identity[1]);
-				var identity = new Ed25519Identity(publicKey, privateKey);
+				var identity = Ed25519Identity.FromPrivateKey(privateKey);
 				DelegationChain chain = info.Delegation.ToCommon();
-				
 				Identity = new DelegationIdentity(identity, chain);
 			}
 
@@ -154,7 +102,8 @@ namespace Candid
 				List<SignedDelegation> delegations = this.Delegations
 					.Select(d => d.ToCommon())
 					.ToList();
-				var publicKey = DerEncodedPublicKey.FromDer(FromHexString(this.PublicKey));
+				byte[] publicKeyBytes = FromHexString(this.PublicKey);
+				SubjectPublicKeyInfo publicKey = SubjectPublicKeyInfo.FromDerEncoding(publicKeyBytes);
 				return new DelegationChain(publicKey, delegations);
 			}
 		}
@@ -187,10 +136,11 @@ namespace Candid
 
 			public Delegation ToCommon()
 			{
-				var publicKey = DerEncodedPublicKey.FromDer(FromHexString(this.PubKey));
+				byte[] publicKeyBytes = FromHexString(this.PubKey);
+				SubjectPublicKeyInfo publicKey = SubjectPublicKeyInfo.FromDerEncoding(publicKeyBytes);
 				ulong nanosecondsFromNow = (ulong)ToBigInteger(FromHexString(this.Expiration), isUnsigned: true, isBigEndian: true);
 				ICTimestamp expiration = ICTimestamp.FromNanoSeconds(nanosecondsFromNow);
-				return new Delegation(publicKey.Value, expiration, targets: null);
+				return new Delegation(publicKey, expiration, targets: null);
 			}
 
 			public static System.Numerics.BigInteger ToBigInteger(byte[] bytes, bool isUnsigned, bool isBigEndian)

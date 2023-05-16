@@ -1365,6 +1365,7 @@ MonoBehaviour:
   worldObj: {fileID: 1813158654}
   mainCanisterId: enf3b-yiaaa-aaaag-qb5eq-cai
   useLocalhost: 0
+  localInternetIdentity: http://localhost:4943?canisterId=qjdve-lqaaa-aaaaa-aaaeq-cai#authorize
   mainMenu: {fileID: 687497785}
   connectBtn: {fileID: 255595544}
   moveTimer: {fileID: 1136152965}

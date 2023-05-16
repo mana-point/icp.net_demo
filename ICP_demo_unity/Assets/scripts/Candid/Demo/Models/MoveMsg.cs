@@ -2,17 +2,17 @@ using EdjCase.ICP.Candid.Mapping;
 
 namespace Candid.Demo.Models
 {
-	public class MoveMsg
+	public class moveMsg
 	{
 		[CandidName("dir")]
 		public int Dir { get; set; }
 
-		public MoveMsg(int dir)
+		public moveMsg(int dir)
 		{
 			this.Dir = dir;
 		}
 
-		public MoveMsg()
+		public moveMsg()
 		{
 		}
 	}

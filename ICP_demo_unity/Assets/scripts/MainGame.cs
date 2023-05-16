@@ -24,6 +24,9 @@ public class MainGame : MonoBehaviour
 	[SerializeField]
 	public bool useLocalhost = true;
 
+	[SerializeField]
+	public string localInternetIdentity = "";
+
 	GameObject playerObj = null;
 	Dictionary<string, GameObject> otherPlayerObjs = new Dictionary<string, GameObject>();
 
@@ -105,7 +108,7 @@ public class MainGame : MonoBehaviour
 
 		connectBtn.interactable = false;
 		
-		DeepLinker.instance.HandleConnection(onLoginCompleted);
+		WebSocketServer.instance.HandleConnection(onLoginCompleted, useLocalhost, localInternetIdentity);
 	}
 
 	void onLoginCompleted(string json)
@@ -150,8 +153,6 @@ public class MainGame : MonoBehaviour
 		{
 			if (identity_json != null)
 				await BackendConnector.createIdentityByJsonAndConnect(mainCanisterId, identity_json, useLocalhost);
-			else
-				await BackendConnector.ConnectICPNET(mainCanisterId, false, useLocalhost);
 		}
 
 		if (!BackendConnector.IsConnected)
@@ -235,7 +236,7 @@ public class MainGame : MonoBehaviour
 		{
 			isCalling = true;
 
-			MoveMsg moveMsg = new MoveMsg(direction);
+			moveMsg moveMsg = new moveMsg(direction);
 			MovePlayerResult result = await BackendConnector.mainClient.MovePlayer(moveMsg);
 
 			if (result.Ok.GetValueOrDefault() != null)
