@@ -41,3 +41,5 @@
 *.csproj
 *.sln
 ICP_demo_unity/UserSettings
+ICP_demo_unity/Windows
+ICP_demo_unity/debug.txt
